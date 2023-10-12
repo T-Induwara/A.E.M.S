@@ -54,6 +54,21 @@ public class mainInterface {
             e.printStackTrace();
         }
 
+        //Font linking for Application btns
+        try {
+            Font RobotoBlack = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Black.ttf")).deriveFont(20f);
+            GraphicsEnvironment font3 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font3.registerFont(RobotoBlack);
+            adminBtn.setFont(RobotoBlack);
+            empBtn.setFont(RobotoBlack);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        // Set the size of adminBtn
+        adminBtn.setPreferredSize(new Dimension(200, 40));
+        empBtn.setPreferredSize(new Dimension(180, 40));
+
         System.out.println("GG");
         System.out.println("TT");
     }
