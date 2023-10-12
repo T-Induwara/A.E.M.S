@@ -15,5 +15,6 @@ public class mainInterface {
     }
 
     public mainInterface() {
+        System.out.println("GG");
     }
 }
