@@ -1,9 +1,6 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.*;
 import java.io.IOException;
-import java.util.Objects;
 import javax.swing.ImageIcon;
 import java.io.File;
 
@@ -12,13 +9,22 @@ public class mainInterface {
     private JLabel appTitle;
     private JLabel appDesc;
     private JLabel appLogo;
+    private JButton adminBtn;
+    private JButton empBtn;
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("mainInterface");
+        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
         frame.setContentPane(new mainInterface().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        // Set the taskbar icon
+        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
+        Image img = imgIcon.getImage();
+        Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imgIcon = new ImageIcon(newimg);  // transform it back
+        frame.setIconImage(imgIcon.getImage());
     }
 
     public mainInterface() {
@@ -28,11 +34,22 @@ public class mainInterface {
         logoIcon = new ImageIcon(newimg);  // transform it back
         appLogo.setIcon(logoIcon);
 
+        //Font linking for Application title
         try {
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/NicoMoji-Regular.ttf")).deriveFont(80f);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(customFont);
-            appTitle.setFont(customFont);
+            Font NicoMoji = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/NicoMoji-Regular.ttf")).deriveFont(80f);
+            GraphicsEnvironment font1 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font1.registerFont(NicoMoji);
+            appTitle.setFont(NicoMoji);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        //Font linking for Application description
+        try {
+            Font Roboto = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Regular.ttf")).deriveFont(20f);
+            GraphicsEnvironment font2 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font2.registerFont(Roboto);
+            appDesc.setFont(Roboto);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
