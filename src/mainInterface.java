@@ -2,9 +2,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
+import javax.swing.ImageIcon;
 
 public class mainInterface {
     private JPanel Main;
+    private JLabel appTitle;
+    private JLabel appDesc;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("mainInterface");
