@@ -26,7 +26,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="e5f4f" class="javax.swing.JLabel" binding="appTitle">
@@ -34,6 +34,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <foreground color="-1"/>
               <text value="A E M S"/>
             </properties>
           </component>
@@ -42,6 +43,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <foreground color="-1"/>
               <text value="Advanced Employee Management System"/>
             </properties>
           </component>
