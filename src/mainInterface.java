@@ -65,9 +65,9 @@ public class mainInterface {
             e.printStackTrace();
         }
 
-        // Set the size of adminBtn
+        // Set the size of adminBtn and empBtn
         adminBtn.setPreferredSize(new Dimension(200, 40));
-        empBtn.setPreferredSize(new Dimension(180, 40));
+        empBtn.setPreferredSize(new Dimension(200, 40));
 
         System.out.println("GG");
         System.out.println("TT");
