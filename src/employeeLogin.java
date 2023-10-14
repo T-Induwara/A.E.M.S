@@ -6,10 +6,11 @@ public class employeeLogin {
     private JPanel Main;
     private JLabel appTitle;
     private JLabel appDesc;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField employeeEmailTextField;
+    private JTextField passwordTextField;
     private JButton loginButton;
     private JButton button1;
+    private JButton returnButton;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("employeeLogin");
