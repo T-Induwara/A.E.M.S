@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import java.io.File;
 
 public class adminInterface {
-    JPanel adminInterface;
+    JPanel Main;
     private JLabel appLogo;
     private JLabel appTitle;
     private JButton superBtn;
@@ -15,9 +15,13 @@ public class adminInterface {
     private JButton sysadBtn;
     private JLabel appDesc;
 
+    public JPanel getMainPanel() {
+        return Main;
+    }
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("A E M S - Advance Employee Management System");
-        frame.setContentPane(new adminInterface().adminInterface);
+        frame.setContentPane(new adminInterface().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

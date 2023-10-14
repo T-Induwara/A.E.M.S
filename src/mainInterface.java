@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class mainInterface {
+    private static JFrame frame;
     private JPanel Main;
     private JLabel appTitle;
     private JLabel appDesc;
@@ -17,11 +18,12 @@ public class mainInterface {
     private JButton empBtn;
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
-        frame.setContentPane(new mainInterface().Main);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        mainInterface mainInterface = new mainInterface();
+        mainInterface.frame = new JFrame("A E M S - Advance Employee Management System");
+        mainInterface.frame.setContentPane(mainInterface.Main);
+        mainInterface.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainInterface.frame.pack();
+        mainInterface.frame.setVisible(true);
 
         // Set the taskbar icon
         ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
@@ -78,7 +80,16 @@ public class mainInterface {
         adminBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Clicked button");
+                //To hide current JPanel
+                Main.setVisible(false);
+
+                adminInterface adminInterface = new adminInterface();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel adminMainPanel = adminInterface.getMainPanel();
+
+                frame.setContentPane(adminMainPanel);
+                frame.validate();
+                frame.repaint();
             }
         });
     }
