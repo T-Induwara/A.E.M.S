@@ -14,6 +14,7 @@ public class adminInterface {
     private JButton hrBtn;
     private JButton sysadBtn;
     private JLabel appDesc;
+    private JButton returnButton;
 
     public JPanel getMainPanel() {
         return Main;
@@ -69,14 +70,16 @@ public class adminInterface {
             superBtn.setFont(RobotoBlack);
             hrBtn.setFont(RobotoBlack);
             sysadBtn.setFont(RobotoBlack);
+            returnButton.setFont(RobotoBlack);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
 
         // Set the size of adminBtn and empBtn
-        superBtn.setPreferredSize(new Dimension(200, 40));
-        hrBtn.setPreferredSize(new Dimension(200, 40));
-        sysadBtn.setPreferredSize(new Dimension(200, 40));
+        superBtn.setPreferredSize(new Dimension(250, 40));
+        hrBtn.setPreferredSize(new Dimension(250, 40));
+        sysadBtn.setPreferredSize(new Dimension(250, 40));
+        returnButton.setPreferredSize(new Dimension(100,40));
 
         superBtn.addActionListener(new ActionListener() {
             @Override
