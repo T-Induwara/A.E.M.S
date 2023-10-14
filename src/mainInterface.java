@@ -1,8 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import java.io.File;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class mainInterface {
     private JPanel Main;
@@ -71,5 +75,12 @@ public class mainInterface {
 
         System.out.println("GG");
         System.out.println("TT");
+        adminBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Clicked button");
+            }
+        });
     }
+
 }
