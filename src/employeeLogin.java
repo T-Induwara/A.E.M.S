@@ -6,13 +6,15 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import java.io.File;
 import javax.swing.JFrame;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class employeeLogin {
     private JPanel Main;
     private JLabel appTitle;
     private JLabel appDesc;
-    private JTextField employeeEmailTextField;
-    private JTextField passwordTextField;
+    private JTextField empUsername;
+    private JTextField empPass;
     private JButton loginBtn;
     private JButton returnBtn;
     private JLabel appLogo;
@@ -69,11 +71,37 @@ public class employeeLogin {
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
+
+        empUsername.setPreferredSize(new Dimension(400, 40));
+        empPass.setPreferredSize(new Dimension(400, 40));
+
+        empUsername.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (empUsername.getText().isEmpty()) {
+                    empUsername.setText("Enter your employee email");
+                }
+                else{
+                    //Nothing happening when non focus
+                    empUsername.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (empUsername.getText().isEmpty()) {
+                    empUsername.setText("Enter your employee email");
+                }
+            }
+        });
+
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
             }
         });
+
+
     }
 }
