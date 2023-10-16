@@ -77,6 +77,8 @@ public class mainInterface {
 
         System.out.println("GG");
         System.out.println("TT");
+        System.out.println("RR");
+
         adminBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
