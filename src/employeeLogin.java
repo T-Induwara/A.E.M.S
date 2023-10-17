@@ -8,6 +8,10 @@ import java.io.File;
 import javax.swing.JFrame;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class employeeLogin {
     private JPanel Main;
@@ -34,7 +38,27 @@ public class employeeLogin {
         frame.setIconImage(imgIcon.getImage());
     }
 
+    Connection con;
+    PreparedStatement pst;
+    public void connect(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax","Masseffect34c1#@");
+            System.out.println("Database connection successful!");
+        }
+        catch (ClassNotFoundException ex)
+        {
+            ex.printStackTrace();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
     public employeeLogin() {
+        connect();
+
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
