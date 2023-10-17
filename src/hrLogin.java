@@ -2,8 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
+import javax.swing.ImageIcon;
+import java.io.File;
+import javax.swing.JFrame;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class hrLogin {
     private JPanel Main;
@@ -59,6 +67,7 @@ public class hrLogin {
 
         hrUsername.setPreferredSize(new Dimension(400, 40));
         hrPass.setPreferredSize(new Dimension(400, 40));
+
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,10 +81,17 @@ public class hrLogin {
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("hrLogin");
+        JFrame frame = new JFrame("A E M S - H R Login Page");
         frame.setContentPane(new hrLogin().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        // Set the taskbar icon
+        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
+        Image img = imgIcon.getImage();
+        Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imgIcon = new ImageIcon(newimg);  // transform it back
+        frame.setIconImage(imgIcon.getImage());
     }
 }
