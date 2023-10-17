@@ -104,7 +104,7 @@ public class adminLogin {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
+        JFrame frame = new JFrame("A E M S - Administrator Login Page");
         frame.setContentPane(new adminLogin().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

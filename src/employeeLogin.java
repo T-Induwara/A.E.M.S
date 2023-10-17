@@ -133,7 +133,7 @@ public class employeeLogin {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
+        JFrame frame = new JFrame("A E M S - Employee Login Page");
         frame.setContentPane(new employeeLogin().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
