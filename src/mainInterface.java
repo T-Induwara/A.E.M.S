@@ -9,13 +9,17 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class mainInterface {
-    private static JFrame frame;
-    private JPanel Main;
+    public static JFrame frame;
+    JPanel Main;
     private JLabel appTitle;
     private JLabel appDesc;
     private JLabel appLogo;
     private JButton adminBtn;
     private JButton empBtn;
+
+    public JPanel getMainPanel() {
+        return Main;
+    }
 
     public static void main(String[] args) {
         mainInterface mainInterface = new mainInterface();

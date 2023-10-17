@@ -87,5 +87,19 @@ public class adminInterface {
 
             }
         });
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.setVisible(false);
+
+                mainInterface mainInterface = new mainInterface();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel mainPanel = mainInterface.getMainPanel();
+
+                mainInterface.frame.setContentPane(mainPanel);
+                mainInterface.frame.validate();
+                mainInterface.frame.repaint();
+            }
+        });
     }
 }
