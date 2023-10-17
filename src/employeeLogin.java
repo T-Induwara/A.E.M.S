@@ -23,6 +23,9 @@ public class employeeLogin {
     private JButton returnBtn;
     private JLabel appLogo;
 
+    public JPanel getMainPanel() {
+        return Main;
+    }
     public static void main(String[] args) {
         JFrame frame = new JFrame("A E M S - Advance Employee Management System");
         frame.setContentPane(new employeeLogin().Main);
@@ -127,5 +130,19 @@ public class employeeLogin {
         });
 
 
+        returnBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.setVisible(false);
+
+                mainInterface mainInterface = new mainInterface();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel mainPanel = mainInterface.getMainPanel();
+
+                mainInterface.frame.setContentPane(mainPanel);
+                mainInterface.frame.validate();
+                mainInterface.frame.repaint();
+            }
+        });
     }
 }

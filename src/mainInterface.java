@@ -99,6 +99,20 @@ public class mainInterface {
                 frame.repaint();
             }
         });
+        empBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.setVisible(false);
+
+                employeeLogin employeeLogin = new employeeLogin();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel empMainPanel = employeeLogin.getMainPanel();
+
+                frame.setContentPane(empMainPanel);
+                frame.validate();
+                frame.repaint();
+            }
+        });
     }
 
 }
