@@ -1,41 +1,26 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.*;
-import java.io.IOException;
-import javax.swing.ImageIcon;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
+import java.io.IOException;
 
-public class adminInterface {
-    JPanel Main;
+public class adminLogin {
+    private JPanel Main;
     private JLabel appLogo;
     private JLabel appTitle;
-    private JButton superBtn;
-    private JButton hrBtn;
-    private JButton sysadBtn;
     private JLabel appDesc;
-    private JButton returnButton;
+    private JTextField adminUsername;
+    private JTextField adminPass;
+    private JButton loginBtn;
+    private JButton returnBtn;
 
     public JPanel getMainPanel() {
         return Main;
     }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
-        frame.setContentPane(new adminInterface().Main);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
-        // Set the taskbar icon
-        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
-        Image img = imgIcon.getImage();
-        Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        imgIcon = new ImageIcon(newimg);  // transform it back
-        frame.setIconImage(imgIcon.getImage());
-    }
-
-    public adminInterface() {
+    public adminLogin() {
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -67,54 +52,69 @@ public class adminInterface {
             Font RobotoBlack = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Black.ttf")).deriveFont(20f);
             GraphicsEnvironment font3 = GraphicsEnvironment.getLocalGraphicsEnvironment();
             font3.registerFont(RobotoBlack);
-            superBtn.setFont(RobotoBlack);
-            hrBtn.setFont(RobotoBlack);
-            sysadBtn.setFont(RobotoBlack);
-            returnButton.setFont(RobotoBlack);
+            loginBtn.setFont(RobotoBlack);
+            returnBtn.setFont(RobotoBlack);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
 
-        // Set the size of adminBtn and empBtn
-        superBtn.setPreferredSize(new Dimension(250, 40));
-        hrBtn.setPreferredSize(new Dimension(250, 40));
-        sysadBtn.setPreferredSize(new Dimension(250, 40));
-        returnButton.setPreferredSize(new Dimension(100,40));
+        adminUsername.setPreferredSize(new Dimension(400, 40));
+        adminPass.setPreferredSize(new Dimension(400, 40));
 
-        superBtn.addActionListener(new ActionListener() {
+        adminUsername.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (adminUsername.getText().isEmpty()) {
+                    adminUsername.setText("Enter your email");
+                }
+                else{
+                    //Nothing happening when non focus
+                    adminUsername.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (adminUsername.getText().isEmpty()) {
+                    adminUsername.setText("Enter your email");
+                }
+            }
+        });
+
+        loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
             }
         });
-        returnButton.addActionListener(new ActionListener() {
+        returnBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.setVisible(false);
 
-                mainInterface mainInterface = new mainInterface();
+                adminInterface adminInterface = new adminInterface();
                 //Assign JPanel of adminInterface.java to the adminMainPanel object
-                JPanel mainPanel = mainInterface.getMainPanel();
+                JPanel adminPanel = adminInterface.getMainPanel();
 
-                mainInterface.frame.setContentPane(mainPanel);
+                mainInterface.frame.setContentPane(adminPanel);
                 mainInterface.frame.validate();
                 mainInterface.frame.repaint();
             }
         });
-        sysadBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //To hide current JPanel
-                Main.setVisible(false);
+    }
 
-                adminLogin adminLogin = new adminLogin();
-                //Assign JPanel of adminInterface.java to the adminMainPanel object
-                JPanel adminLoginPanel = adminLogin.getMainPanel();
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
+        frame.setContentPane(new adminLogin().Main);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
 
-                mainInterface.frame.setContentPane(adminLoginPanel);
-                mainInterface.frame.validate();
-                mainInterface.frame.repaint();
-            }
-        });
+        // Set the taskbar icon
+        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
+        Image img = imgIcon.getImage();
+        Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imgIcon = new ImageIcon(newimg);  // transform it back
+        frame.setIconImage(imgIcon.getImage());
     }
 }

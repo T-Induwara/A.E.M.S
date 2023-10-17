@@ -26,20 +26,6 @@ public class employeeLogin {
     public JPanel getMainPanel() {
         return Main;
     }
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
-        frame.setContentPane(new employeeLogin().Main);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
-        // Set the taskbar icon
-        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
-        Image img = imgIcon.getImage();
-        Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        imgIcon = new ImageIcon(newimg);  // transform it back
-        frame.setIconImage(imgIcon.getImage());
-    }
 
     Connection con;
     PreparedStatement pst;
@@ -144,5 +130,20 @@ public class employeeLogin {
                 mainInterface.frame.repaint();
             }
         });
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
+        frame.setContentPane(new employeeLogin().Main);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+        // Set the taskbar icon
+        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
+        Image img = imgIcon.getImage();
+        Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imgIcon = new ImageIcon(newimg);  // transform it back
+        frame.setIconImage(imgIcon.getImage());
     }
 }
