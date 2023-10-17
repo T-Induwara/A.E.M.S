@@ -131,5 +131,20 @@ public class adminInterface {
                 mainInterface.frame.repaint();
             }
         });
+        superBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //To hide current JPanel
+                Main.setVisible(false);
+
+                superLogin superLogin = new superLogin();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel superLoginPanel = superLogin.getMainPanel();
+
+                mainInterface.frame.setContentPane(superLoginPanel);
+                mainInterface.frame.validate();
+                mainInterface.frame.repaint();
+            }
+        });
     }
 }
