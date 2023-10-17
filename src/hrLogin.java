@@ -74,6 +74,21 @@ public class hrLogin {
 
             }
         });
+        returnBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //To hide current JPanel
+                Main.setVisible(false);
+
+                adminInterface adminInterface = new adminInterface();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel adminPanel = adminInterface.getMainPanel();
+
+                mainInterface.frame.setContentPane(adminPanel);
+                mainInterface.frame.validate();
+                mainInterface.frame.repaint();
+            }
+        });
     }
 
 
