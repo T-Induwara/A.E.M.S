@@ -8,10 +8,10 @@ import javax.swing.JFrame;
 public class employeeInterface {
     private JPanel Main;
     private JLabel appLogo;
-    private JButton viewEmployee;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
+    private JButton viewEmpBtn;
+    private JButton upEmpBtn;
+    private JButton reqLeaveBtn;
+    private JButton reqWithdrawBtn;
     private JTabbedPane tabbedPane1;
 
     public employeeInterface() {
@@ -21,8 +21,11 @@ public class employeeInterface {
         logoIcon = new ImageIcon(newimg);  // transform it back
         appLogo.setIcon(logoIcon);
 
-        viewEmployee.setPreferredSize(new Dimension(250, 40));
-        viewEmployee.addActionListener(new ActionListener() {
+        viewEmpBtn.setPreferredSize(new Dimension(250, 40));
+        upEmpBtn.setPreferredSize(new Dimension(250, 40));
+        reqLeaveBtn.setPreferredSize(new Dimension(250, 40));
+        reqWithdrawBtn.setPreferredSize(new Dimension(250, 40));
+        viewEmpBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -31,7 +34,7 @@ public class employeeInterface {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
+        JFrame frame = new JFrame("A E M S - Dashboard");
         frame.setContentPane(new employeeInterface().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
