@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -12,7 +14,16 @@ public class employeeInterface {
     private JButton upEmpBtn;
     private JButton reqLeaveBtn;
     private JButton reqWithdrawBtn;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane empTabs;
+    private JLabel appTitle;
+    private JLabel tab1;
+    private JLabel tab2;
+    private JLabel tab3;
+    private JLabel tab4;
+    private JPanel empProfile;
+    private JPanel empUProfile;
+    private JPanel empRLeave;
+    private JPanel empWLeave;
 
     public employeeInterface() {
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
@@ -21,6 +32,16 @@ public class employeeInterface {
         logoIcon = new ImageIcon(newimg);  // transform it back
         appLogo.setIcon(logoIcon);
 
+        //Font linking for Application title
+        try {
+            Font NicoMoji = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/NicoMoji-Regular.ttf")).deriveFont(40f);
+            GraphicsEnvironment font1 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font1.registerFont(NicoMoji);
+            appTitle.setFont(NicoMoji);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
         viewEmpBtn.setPreferredSize(new Dimension(250, 40));
         upEmpBtn.setPreferredSize(new Dimension(250, 40));
         reqLeaveBtn.setPreferredSize(new Dimension(250, 40));
@@ -28,7 +49,26 @@ public class employeeInterface {
         viewEmpBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                empTabs.setSelectedIndex(0);
+            }
+        });
 
+        upEmpBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                empTabs.setSelectedIndex(1);
+            }
+        });
+        reqLeaveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                empTabs.setSelectedIndex(2);
+            }
+        });
+        reqWithdrawBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                empTabs.setSelectedIndex(3);
             }
         });
     }
