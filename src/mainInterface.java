@@ -9,13 +9,17 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class mainInterface {
-    private static JFrame frame;
-    private JPanel Main;
+    public static JFrame frame;
+    JPanel Main;
     private JLabel appTitle;
     private JLabel appDesc;
     private JLabel appLogo;
     private JButton adminBtn;
     private JButton empBtn;
+
+    public JPanel getMainPanel() {
+        return Main;
+    }
 
     public static void main(String[] args) {
         mainInterface mainInterface = new mainInterface();
@@ -77,6 +81,9 @@ public class mainInterface {
 
         System.out.println("GG");
         System.out.println("TT");
+        //Testing code
+        System.out.println("RR");
+
         adminBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,6 +95,20 @@ public class mainInterface {
                 JPanel adminMainPanel = adminInterface.getMainPanel();
 
                 frame.setContentPane(adminMainPanel);
+                frame.validate();
+                frame.repaint();
+            }
+        });
+        empBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.setVisible(false);
+
+                employeeLogin employeeLogin = new employeeLogin();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel empMainPanel = employeeLogin.getMainPanel();
+
+                frame.setContentPane(empMainPanel);
                 frame.validate();
                 frame.repaint();
             }

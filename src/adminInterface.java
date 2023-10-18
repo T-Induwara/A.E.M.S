@@ -87,5 +87,64 @@ public class adminInterface {
 
             }
         });
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.setVisible(false);
+
+                mainInterface mainInterface = new mainInterface();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel mainPanel = mainInterface.getMainPanel();
+
+                mainInterface.frame.setContentPane(mainPanel);
+                mainInterface.frame.validate();
+                mainInterface.frame.repaint();
+            }
+        });
+        sysadBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //To hide current JPanel
+                Main.setVisible(false);
+
+                adminLogin adminLogin = new adminLogin();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel adminLoginPanel = adminLogin.getMainPanel();
+
+                mainInterface.frame.setContentPane(adminLoginPanel);
+                mainInterface.frame.validate();
+                mainInterface.frame.repaint();
+            }
+        });
+        hrBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //To hide current JPanel
+                Main.setVisible(false);
+
+                hrLogin hrLogin = new hrLogin();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel hrLoginPanel = hrLogin.getMainPanel();
+
+                mainInterface.frame.setContentPane(hrLoginPanel);
+                mainInterface.frame.validate();
+                mainInterface.frame.repaint();
+            }
+        });
+        superBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //To hide current JPanel
+                Main.setVisible(false);
+
+                superLogin superLogin = new superLogin();
+                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                JPanel superLoginPanel = superLogin.getMainPanel();
+
+                mainInterface.frame.setContentPane(superLoginPanel);
+                mainInterface.frame.validate();
+                mainInterface.frame.repaint();
+            }
+        });
     }
 }

@@ -13,41 +13,21 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class employeeLogin {
-    JPanel Main;
+public class hrLogin {
+    private JPanel Main;
+    private JLabel appLogo;
     private JLabel appTitle;
-    private JLabel appDesc;
-    private JTextField empUsername;
-    private JTextField empPass;
+    private JTextField hrUsername;
+    private JTextField hrPass;
     private JButton loginBtn;
     private JButton returnBtn;
-    private JLabel appLogo;
+    private JLabel appDesc;
 
     public JPanel getMainPanel() {
         return Main;
     }
 
-    Connection con;
-    PreparedStatement pst;
-    public void connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax","Masseffect34c1#@");
-            System.out.println("Database connection successful!");
-        }
-        catch (ClassNotFoundException ex)
-        {
-            ex.printStackTrace();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-
-    public employeeLogin() {
-        connect();
-
+    public hrLogin() {
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -85,25 +65,25 @@ public class employeeLogin {
             e.printStackTrace();
         }
 
-        empUsername.setPreferredSize(new Dimension(400, 40));
-        empPass.setPreferredSize(new Dimension(400, 40));
+        hrUsername.setPreferredSize(new Dimension(400, 40));
+        hrPass.setPreferredSize(new Dimension(400, 40));
 
-        empUsername.addFocusListener(new FocusListener() {
+        hrUsername.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (empUsername.getText().isEmpty()) {
-                    empUsername.setText("Enter your employee email");
+                if (hrUsername.getText().isEmpty()) {
+                    hrUsername.setText("Enter your email");
                 }
                 else{
                     //Nothing happening when non focus
-                    empUsername.setText("");
+                    hrUsername.setText("");
                 }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                if (empUsername.getText().isEmpty()) {
-                    empUsername.setText("Enter your employee email");
+                if (hrUsername.getText().isEmpty()) {
+                    hrUsername.setText("Enter your email");
                 }
             }
         });
@@ -114,27 +94,30 @@ public class employeeLogin {
 
             }
         });
-
-
         returnBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //To hide current JPanel
                 Main.setVisible(false);
 
-                mainInterface mainInterface = new mainInterface();
+                adminInterface adminInterface = new adminInterface();
                 //Assign JPanel of adminInterface.java to the adminMainPanel object
-                JPanel mainPanel = mainInterface.getMainPanel();
+                JPanel adminPanel = adminInterface.getMainPanel();
 
-                mainInterface.frame.setContentPane(mainPanel);
+                mainInterface.frame.setContentPane(adminPanel);
                 mainInterface.frame.validate();
                 mainInterface.frame.repaint();
             }
         });
     }
 
+
+
+
+
     public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Employee Login Page");
-        frame.setContentPane(new employeeLogin().Main);
+        JFrame frame = new JFrame("A E M S - H R Login Page");
+        frame.setContentPane(new hrLogin().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

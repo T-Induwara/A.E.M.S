@@ -1,53 +1,28 @@
 import javax.swing.*;
+import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import javax.swing.ImageIcon;
-import java.io.File;
-import javax.swing.JFrame;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.io.File;
+import java.io.IOException;
 
-public class employeeLogin {
-    JPanel Main;
+public class superLogin {
+    private JPanel Main;
+    private JLabel appLogo;
     private JLabel appTitle;
     private JLabel appDesc;
-    private JTextField empUsername;
-    private JTextField empPass;
+    private JTextField superUsername;
+    private JTextField superPass;
     private JButton loginBtn;
     private JButton returnBtn;
-    private JLabel appLogo;
 
     public JPanel getMainPanel() {
         return Main;
     }
 
-    Connection con;
-    PreparedStatement pst;
-    public void connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax","Masseffect34c1#@");
-            System.out.println("Database connection successful!");
-        }
-        catch (ClassNotFoundException ex)
-        {
-            ex.printStackTrace();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-
-    public employeeLogin() {
-        connect();
-
+    public superLogin() {
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -85,25 +60,25 @@ public class employeeLogin {
             e.printStackTrace();
         }
 
-        empUsername.setPreferredSize(new Dimension(400, 40));
-        empPass.setPreferredSize(new Dimension(400, 40));
+        superUsername.setPreferredSize(new Dimension(400, 40));
+        superPass.setPreferredSize(new Dimension(400, 40));
 
-        empUsername.addFocusListener(new FocusListener() {
+        superUsername.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (empUsername.getText().isEmpty()) {
-                    empUsername.setText("Enter your employee email");
+                if (superUsername.getText().isEmpty()) {
+                    superUsername.setText("Enter your email");
                 }
                 else{
                     //Nothing happening when non focus
-                    empUsername.setText("");
+                    superUsername.setText("");
                 }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                if (empUsername.getText().isEmpty()) {
-                    empUsername.setText("Enter your employee email");
+                if (superUsername.getText().isEmpty()) {
+                    superUsername.setText("Enter your email");
                 }
             }
         });
@@ -114,18 +89,16 @@ public class employeeLogin {
 
             }
         });
-
-
         returnBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.setVisible(false);
 
-                mainInterface mainInterface = new mainInterface();
+                adminInterface adminInterface = new adminInterface();
                 //Assign JPanel of adminInterface.java to the adminMainPanel object
-                JPanel mainPanel = mainInterface.getMainPanel();
+                JPanel adminPanel = adminInterface.getMainPanel();
 
-                mainInterface.frame.setContentPane(mainPanel);
+                mainInterface.frame.setContentPane(adminPanel);
                 mainInterface.frame.validate();
                 mainInterface.frame.repaint();
             }
@@ -133,8 +106,8 @@ public class employeeLogin {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Employee Login Page");
-        frame.setContentPane(new employeeLogin().Main);
+        JFrame frame = new JFrame("A E M S - Supervisor Login Page");
+        frame.setContentPane(new superLogin().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
