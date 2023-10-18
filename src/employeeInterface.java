@@ -16,10 +16,10 @@ public class employeeInterface {
     private JButton reqWithdrawBtn;
     private JTabbedPane empTabs;
     private JLabel appTitle;
-    private JLabel tab1;
-    private JLabel tab2;
-    private JLabel tab3;
-    private JLabel tab4;
+    private JLabel tab1Title;
+    private JLabel tab2Title;
+    private JLabel tab3Title;
+    private JLabel tab4Title;
     private JPanel empProfile;
     private JPanel empUProfile;
     private JPanel empRLeave;
@@ -42,10 +42,38 @@ public class employeeInterface {
             e.printStackTrace();
         }
 
+        //Font linking for Application Tab Titles
+        try {
+            Font Roboto = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Regular.ttf")).deriveFont(25f);
+            GraphicsEnvironment font2 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font2.registerFont(Roboto);
+            tab1Title.setFont(Roboto);
+            tab2Title.setFont(Roboto);
+            tab3Title.setFont(Roboto);
+            tab4Title.setFont(Roboto);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        //Font linking for Application btns
+        try {
+            Font RobotoBlack = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Black.ttf")).deriveFont(20f);
+            GraphicsEnvironment font3 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font3.registerFont(RobotoBlack);
+            viewEmpBtn.setFont(RobotoBlack);
+            upEmpBtn.setFont(RobotoBlack);
+            reqLeaveBtn.setFont(RobotoBlack);
+            reqWithdrawBtn.setFont(RobotoBlack);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
         viewEmpBtn.setPreferredSize(new Dimension(250, 40));
         upEmpBtn.setPreferredSize(new Dimension(250, 40));
         reqLeaveBtn.setPreferredSize(new Dimension(250, 40));
         reqWithdrawBtn.setPreferredSize(new Dimension(250, 40));
+
+        //Page button actions
         viewEmpBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
