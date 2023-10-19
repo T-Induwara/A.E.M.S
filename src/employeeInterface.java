@@ -24,6 +24,17 @@ public class employeeInterface {
     private JPanel empUProfile;
     private JPanel empRLeave;
     private JPanel empWLeave;
+    private JTextField eNameField;
+    private JTextField eEmailField;
+    private JTextField eGenField;
+    private JTextField eAddField;
+    private JTextField eNumField;
+    private JButton upDetailsBtn;
+    private JTextField rDateField;
+    private JTextField rNoteField;
+    private JTextField rTimeField;
+    private JTextField rInfoField;
+    private JButton requestLeaveButton;
 
     public employeeInterface() {
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
@@ -72,6 +83,9 @@ public class employeeInterface {
         upEmpBtn.setPreferredSize(new Dimension(250, 40));
         reqLeaveBtn.setPreferredSize(new Dimension(250, 40));
         reqWithdrawBtn.setPreferredSize(new Dimension(250, 40));
+
+        //Btn size change for update emp details tab
+        upDetailsBtn.setPreferredSize(new Dimension(200, 40));
 
         //Page button actions
         viewEmpBtn.addActionListener(new ActionListener() {
