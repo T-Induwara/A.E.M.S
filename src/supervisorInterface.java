@@ -10,15 +10,33 @@ import javax.swing.ImageIcon;
 public class supervisorInterface {
 
     private JPanel main;
-    private JTabbedPane tabbedPane1;
-    private JButton updateRemoveTasksButton;
+    private JTabbedPane updateAndRemove;
+    private JButton update;
     private JButton addTasks;
     private JButton viewTask;
     private JLabel appTitle;
     private JLabel appLogo;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField txtTitle;
+    private JTextField txtDate;
+    private JTextField txtEmpID;
+    private JTextField txtDescription;
+    private JTextField txtTaskTime;
+    private JButton appoint;
+    private JTable table1;
+    private JTextField txtTaskTitle;
+    private JTextField txtTaskDate;
+    private JTextField txtEmployee;
+    private JButton updateTask;
+    private JTextField txtTaskDesc;
+    private JTextField txtTasktime;
+    private JButton removeTask;
+    private JButton searchEmployeeButton;
+    private JTextField txtSearch;
+    private JLabel taskTitle;
+    private JLabel taskDate;
+    private JLabel employeeID;
+    private JLabel taskDes;
+    private JLabel taskTime;
 
 
     public supervisorInterface() {
@@ -39,8 +57,42 @@ public class supervisorInterface {
             e.printStackTrace();
         }
 
+        //Main interface buttons
         viewTask.setPreferredSize(new Dimension(250, 40));
         addTasks.setPreferredSize(new Dimension(250, 40));
+        update.setPreferredSize(new Dimension(250, 40));
+
+        //Add task tab
+            //Buttons
+        appoint.setPreferredSize(new Dimension(250, 40));
+
+            //Text Fields
+        txtTitle.setPreferredSize(new Dimension(250, 40));
+        txtDescription.setPreferredSize(new Dimension(250, 40));
+        txtDate.setPreferredSize(new Dimension(250, 40));
+        txtEmpID.setPreferredSize(new Dimension(250, 40));
+        txtTaskTime.setPreferredSize(new Dimension(250, 40));
+
+        //Update and Remove tab
+            //Buttons
+        searchEmployeeButton.setPreferredSize(new Dimension(150, 30));
+        taskTitle.setPreferredSize(new Dimension(150, 30));
+        taskDate.setPreferredSize(new Dimension(150, 30));
+        employeeID.setPreferredSize(new Dimension(150, 30));
+        taskDes.setPreferredSize(new Dimension(150, 30));
+        updateTask.setPreferredSize(new Dimension(150, 30));
+        removeTask.setPreferredSize(new Dimension(150, 30));
+
+            //Text Fields
+        txtSearch.setPreferredSize(new Dimension(150, 35));
+        taskTime.setPreferredSize(new Dimension(150, 30));
+        txtTaskTitle.setPreferredSize(new Dimension(150, 30));
+        txtTaskDate.setPreferredSize(new Dimension(150, 30));
+        txtEmployee.setPreferredSize(new Dimension(150, 30));
+        txtTaskDesc.setPreferredSize(new Dimension(150, 30));
+        txtTasktime.setPreferredSize(new Dimension(150, 30));
+
+
 
         viewTask.addActionListener(new ActionListener() {
             @Override
@@ -48,6 +100,8 @@ public class supervisorInterface {
 
             }
         });
+
+
     }
 
     public static void main(String[] args) {
