@@ -35,6 +35,9 @@ public class employeeInterface {
     private JTextField rTimeField;
     private JTextField rInfoField;
     private JButton requestLeaveButton;
+    private JTable table1;
+    private JButton withLeaveReqBtn;
+    private JTextField reqNum;
 
     public employeeInterface() {
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
@@ -86,6 +89,28 @@ public class employeeInterface {
 
         //Btn size change for update emp details tab
         upDetailsBtn.setPreferredSize(new Dimension(200, 40));
+
+        //Btn size change for request leave tab
+        requestLeaveButton.setPreferredSize(new Dimension(200, 40));
+
+        //Btn size change for withdraw leave request tab
+        withLeaveReqBtn.setPreferredSize(new Dimension(200, 40));
+
+        //View employee information tab txtfield sizes
+        eNameField.setPreferredSize(new Dimension(250, 40));
+        eEmailField.setPreferredSize(new Dimension(250, 40));
+        eGenField.setPreferredSize(new Dimension(250, 40));
+        eAddField.setPreferredSize(new Dimension(250, 40));
+        eNumField.setPreferredSize(new Dimension(250, 40));
+
+        //Update employee information tab txtfield sizes
+        rDateField.setPreferredSize(new Dimension(250, 40));
+        rInfoField.setPreferredSize(new Dimension(250, 40));
+        rNoteField.setPreferredSize(new Dimension(250, 40));
+        rTimeField.setPreferredSize(new Dimension(250, 40));
+
+        //Withdraw request tab txtfield sizes
+        reqNum.setPreferredSize(new Dimension(250, 40));
 
         //Page button actions
         viewEmpBtn.addActionListener(new ActionListener() {
