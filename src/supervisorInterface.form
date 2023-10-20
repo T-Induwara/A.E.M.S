@@ -578,7 +578,9 @@
                             <preferred-size width="175" height="-1"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <text value=""/>
+                        </properties>
                       </component>
                       <vspacer id="c2faa">
                         <constraints>

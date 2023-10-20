@@ -6,6 +6,8 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import java.io.File;
 import javax.swing.JFrame;
+import javax.swing.text.JTextComponent;
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -75,6 +77,7 @@ public class supervisorInterface {
 
     public supervisorInterface() {
         connect();
+
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -126,6 +129,9 @@ public class supervisorInterface {
         txtTaskDesc.setPreferredSize(new Dimension(150, 30));
         txtTasktime.setPreferredSize(new Dimension(150, 30));
 
+        //Add task tab
+
+
 
         viewTask.addActionListener(new ActionListener() {
             @Override
@@ -139,6 +145,40 @@ public class supervisorInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                String taskTitle,taskDes,taskDate,taskTime,employeeID;
+
+                taskTitle=txtTaskTitle.getText();
+                taskDes= txtTaskDesc.getText();
+                taskDate=txtTaskDate.getText();
+                taskTime=txtTasktime.getText();
+                employeeID=txtEmployee.getText();
+
+                try{
+                    pst = con.prepareStatement("UPDATE tasks set taskTite =? ,description= ?,date= ?,time= ?,empID= ?  where empID= ?");
+                    pst.setString(1,taskTitle);
+                    pst.setString(2,taskDes);
+                    pst.setString(3,taskDate);
+                    pst.setString(4,taskTime);
+                    pst.setString(5,employeeID);
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null,"Record Updated.......");
+
+                    //table_load();
+                    txtTaskTitle.setText("");
+                    txtTaskDesc.setText("");
+                    txtTaskDate.setText("");
+                    txtTasktime.setText("");
+                    txtEmployee.setText("");
+                    txtTaskTitle.requestFocus();
+                }
+
+                catch (SQLException e1){
+                    e1.printStackTrace();
+                }
+
+
+
             }
         });
         removeTask.addActionListener(new ActionListener() {
@@ -150,6 +190,48 @@ public class supervisorInterface {
         searchEmployeeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                try{
+
+                    String empid = txtSearch.getText();
+                    pst = con.prepareStatement("SELECT taskTitle,description,date,time,empID from tasks where empID=?");
+                    pst.setString(1,empid);
+                    ResultSet rs =pst.executeQuery();
+
+                    if (rs.next()==true){
+                        String taskTitle = rs.getString(1);
+                        String taskDes = rs.getString(2);
+                        String taskDate = rs.getString(3);
+                        String taskTime = rs.getString(4);
+                        String employeeID = rs.getString(5);
+
+
+                        txtTaskTitle.setText(taskTitle);
+                        txtTaskDesc.setText(taskDes);
+                        txtTaskDate.setText(taskDate);
+                        txtTasktime.setText(taskTime);
+                        txtEmployee.setText(employeeID);
+
+                    }
+                    else {
+
+                        txtTaskTitle.setText("");
+                        txtTaskDesc.setText("");
+                        txtTaskDate.setText("");
+                        txtTasktime.setText("");
+                        txtEmployee.setText("");
+
+                        JOptionPane.showMessageDialog(null,"Invalid Employee Number.");
+
+                    }
+
+
+                }
+                catch(SQLException ex)
+                {
+                    ex.printStackTrace();
+
+                }
 
 
             }
@@ -178,6 +260,38 @@ public class supervisorInterface {
         appoint.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String taskTitle,taskDate,taskDesc,taskTime,empID;
+
+                taskTitle= txtTitle.getText();
+                taskDate= txtTaskDate.getText();
+                taskDesc =txtDescription.getText();
+                taskTime = txtTaskTime.getText();
+                empID = txtEmpID.getText();
+
+                try{
+                    pst = con.prepareStatement("INSERT INTO tasks(taskTitle,description,date,time,empID)VALUES (?,?,?,?,?)");
+                    pst.setString(1,taskTitle);
+                    pst.setString(2,taskDesc);
+                    pst.setString(3,taskDate);
+                    pst.setString(4,taskTime);
+                    pst.setString(5,empID);
+
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null,"Record Added.......");
+                    //table_load();
+                    txtTitle.setText("");
+                    txtTaskDate.setText("");
+                    txtDescription.setText("");
+                    txtTaskTime.setText("");
+                    txtEmpID.setText("");
+                    txtTitle.requestFocus();
+                }
+
+                catch (SQLException e1){
+                    e1.printStackTrace();
+                }
 
             }
         });
