@@ -7,10 +7,46 @@ public class hrInterface {
     private JPanel Main;
     private JLabel appLogo;
     private JLabel appTitle;
-    private JButton button1;
-    private JTabbedPane tabbedPane1;
+    private JButton viewEmployee;
+    private JTabbedPane addEmployee;
     private JTable table1;
-    private JButton button2;
+    private JButton updateRemoveButton;
+    private JLabel currentEmployee;
+    private JLabel empname;
+    private JTextField empName;
+    private JLabel empGen;
+    private JTextField empgen;
+    private JPanel position;
+    private JTextField pos;
+    private JLabel Password;
+    private JLabel adress;
+    private JTextField empadd;
+    private JLabel empcon;
+    private JTextField empCon;
+    private JLabel empsal;
+    private JTextField empSal;
+    private JLabel empEmail;
+    private JTextField empemail;
+    private JPasswordField empPassword;
+    private JTextField empSearch;
+    private JTextField empName2;
+    private JLabel empgen2;
+    private JTextField empGen2;
+    private JLabel Nic2;
+    private JLabel empposition;
+    private JTextField empposition2;
+    private JLabel empAdress2;
+    private JTextField adress2;
+    private JLabel contactNumber2;
+    private JTextField textField1;
+    private JLabel basicsalary;
+    private JTextField basicsalary2;
+    private JTextField empnic2;
+    private JLabel empemail2;
+    private JTextField textField2;
+    private JButton empupdate;
+    private JButton empremove;
+    private JButton button1;
 
     public hrInterface() {
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
@@ -18,7 +54,13 @@ public class hrInterface {
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         logoIcon = new ImageIcon(newimg);  // transform it back
         appLogo.setIcon(logoIcon);
-        button1.addActionListener(new ActionListener() {
+        viewEmployee.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        updateRemoveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -39,5 +81,9 @@ public class hrInterface {
         Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         imgIcon = new ImageIcon(newimg);  // transform it back
         frame.setIconImage(imgIcon.getImage());
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
