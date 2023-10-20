@@ -184,6 +184,30 @@ public class supervisorInterface {
         removeTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String empID;
+
+                empID = txtEmployee.getText();
+
+                try{
+                    pst = con.prepareStatement("DELETE from tasks where empID = ?");
+                    pst.setString(1,empID);
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null,"Record Deleted.......");
+
+                    //table_load();
+                    txtTaskTitle.setText("");
+                    txtTaskDesc.setText("");
+                    txtTaskDate.setText("");
+                    txtTasktime.setText("");
+                    txtEmployee.setText("");
+                    txtTaskTitle.requestFocus();
+                }
+
+                catch (SQLException e1){
+                    e1.printStackTrace();
+                }
+
 
             }
         });
