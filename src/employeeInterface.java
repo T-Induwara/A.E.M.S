@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class employeeInterface {
-    private JPanel Main;
+    JPanel Main;
     private JLabel appLogo;
     private JButton viewEmpBtn;
     private JButton upEmpBtn;
@@ -38,6 +38,10 @@ public class employeeInterface {
     private JTable table1;
     private JButton withLeaveReqBtn;
     private JTextField reqNum;
+
+    public JPanel getMainPanel() {
+        return Main;
+    }
 
     public employeeInterface() {
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");

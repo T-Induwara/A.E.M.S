@@ -8,6 +8,7 @@ import java.io.File;
 import javax.swing.JFrame;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,17 +19,18 @@ public class employeeLogin {
     private JLabel appTitle;
     private JLabel appDesc;
     private JTextField empUsername;
-    private JTextField empPass;
+    private JPasswordField empPass;
     private JButton loginBtn;
     private JButton returnBtn;
     private JLabel appLogo;
+
+    Connection con;
+    PreparedStatement pst;
 
     public JPanel getMainPanel() {
         return Main;
     }
 
-    Connection con;
-    PreparedStatement pst;
     public void connect(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -111,7 +113,48 @@ public class employeeLogin {
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String userEmail,userPass;
 
+                try {
+
+                    userEmail = empUsername.getText();
+                    char[] userPassword = empPass.getPassword();
+                    userPass = new String(userPassword);
+
+                    pst = con.prepareStatement("SELECT empID,email,password FROM employee WHERE email = ?");
+                    pst.setString(1, userEmail);
+                    ResultSet rs = pst.executeQuery();
+
+                    if(rs.next()==true){
+                        String empID = rs.getString(1);
+                        String empEmail = rs.getString(2);
+                        String empPass = rs.getString(3);
+                        System.out.println("Pass is "+empPass);
+                        System.out.println("Entered Pass is "+userPass);
+
+                        if(userPass.equals(empPass)){
+                            //To hide current JPanel
+                            Main.setVisible(false);
+
+                            employeeInterface employeeInterface = new employeeInterface();
+                            //Assign JPanel of adminInterface.java to the adminMainPanel object
+                            JPanel empPanel = employeeInterface.getMainPanel();
+
+                            mainInterface.frame.setContentPane(empPanel);
+                            mainInterface.frame.validate();
+                            mainInterface.frame.repaint();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null,"Password is incorrect!");
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Please check your email again!");
+                    }
+                }
+                catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
