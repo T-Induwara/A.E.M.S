@@ -129,7 +129,7 @@
                           <text value="Name"/>
                         </properties>
                       </component>
-                      <component id="262ae" class="javax.swing.JLabel">
+                      <component id="262ae" class="javax.swing.JLabel" binding="frmName">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -146,7 +146,7 @@
                           <text value="Email"/>
                         </properties>
                       </component>
-                      <component id="1d2eb" class="javax.swing.JLabel">
+                      <component id="1d2eb" class="javax.swing.JLabel" binding="frmMail">
                         <constraints>
                           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -163,7 +163,7 @@
                           <text value="N I C"/>
                         </properties>
                       </component>
-                      <component id="467e" class="javax.swing.JLabel">
+                      <component id="467e" class="javax.swing.JLabel" binding="frmNIC">
                         <constraints>
                           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -180,7 +180,7 @@
                           <text value="Gender"/>
                         </properties>
                       </component>
-                      <component id="edbc" class="javax.swing.JLabel">
+                      <component id="edbc" class="javax.swing.JLabel" binding="frmGender">
                         <constraints>
                           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -207,7 +207,7 @@
                           <text value="Address"/>
                         </properties>
                       </component>
-                      <component id="b9c84" class="javax.swing.JLabel">
+                      <component id="b9c84" class="javax.swing.JLabel" binding="frmAdd">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -224,7 +224,7 @@
                           <text value="Phone number"/>
                         </properties>
                       </component>
-                      <component id="94b96" class="javax.swing.JLabel">
+                      <component id="94b96" class="javax.swing.JLabel" binding="frmNum">
                         <constraints>
                           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -241,7 +241,7 @@
                           <text value="Position"/>
                         </properties>
                       </component>
-                      <component id="aabe6" class="javax.swing.JLabel">
+                      <component id="aabe6" class="javax.swing.JLabel" binding="frmPosition">
                         <constraints>
                           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>

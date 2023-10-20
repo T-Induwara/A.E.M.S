@@ -23,6 +23,7 @@ public class employeeLogin {
     private JButton loginBtn;
     private JButton returnBtn;
     private JLabel appLogo;
+    int passEmpID = 2;
 
     Connection con;
     PreparedStatement pst;
@@ -116,8 +117,8 @@ public class employeeLogin {
                 String userEmail,userPass;
 
                 try {
-
                     userEmail = empUsername.getText();
+                    //Convert String array into String variable
                     char[] userPassword = empPass.getPassword();
                     userPass = new String(userPassword);
 
@@ -127,6 +128,9 @@ public class employeeLogin {
 
                     if(rs.next()==true){
                         String empID = rs.getString(1);
+                        passEmpID = Integer.parseInt(empID);
+                        //check code
+                        System.out.println("My ID in login page is "+passEmpID);
                         String empEmail = rs.getString(2);
                         String empPass = rs.getString(3);
                         System.out.println("Pass is "+empPass);
@@ -173,6 +177,10 @@ public class employeeLogin {
                 mainInterface.frame.repaint();
             }
         });
+    }
+
+    public int getEmpID(){
+        return passEmpID;
     }
 
     public static void main(String[] args) {

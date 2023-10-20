@@ -2,10 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import javax.swing.ImageIcon;
+import java.io.File;
 import javax.swing.JFrame;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class employeeInterface {
     JPanel Main;
@@ -38,12 +45,40 @@ public class employeeInterface {
     private JTable table1;
     private JButton withLeaveReqBtn;
     private JTextField reqNum;
+    private JLabel frmName;
+    private JLabel frmAdd;
+    private JLabel frmMail;
+    private JLabel frmNum;
+    private JLabel frmNIC;
+    private JLabel frmPosition;
+    private JLabel frmGender;
+
+    Connection con;
+    PreparedStatement pst;
 
     public JPanel getMainPanel() {
         return Main;
     }
 
+
+    public void connect(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax","Masseffect34c1#@");
+            System.out.println("Database connection successful!");
+        }
+        catch (ClassNotFoundException ex)
+        {
+            ex.printStackTrace();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
     public employeeInterface() {
+        connect();
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -121,6 +156,45 @@ public class employeeInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 empTabs.setSelectedIndex(0);
+
+                String empName,empAddress,empMail,empNumber,empPosition,empGender;
+
+                try {
+                    int tempEmpID;
+                    employeeLogin empLogin = new employeeLogin();
+                    tempEmpID = empLogin.getEmpID();
+                    System.out.println("My id is "+tempEmpID);
+
+                    pst = con.prepareStatement("SELECT name,address,gender,contactNumber,nic,position,email FROM employee WHERE empID = ?");
+                    pst.setInt(1, tempEmpID);
+                    ResultSet rs = pst.executeQuery();
+
+                    if(rs.next()==true){
+                        String eName = rs.getString(1);
+                        String eAdd = rs.getString(2);
+                        String eGender = rs.getString(3);
+                        int eNum = rs.getInt(4);
+                        String eNIC = rs.getString(5);
+                        String ePosition = rs.getString(6);
+                        String eEmail = rs.getString(7);
+
+                        frmName.setText(eName);
+                        frmAdd.setText(eAdd);
+                        frmMail.setText(eEmail);
+                        //Convert contact number received from the database from int datatype to string.
+                        String eNumber = String.valueOf(eNum);
+                        frmNum.setText(eNumber);
+                        frmNIC.setText(eNIC);
+                        frmPosition.setText(ePosition);
+                        frmGender.setText(eGender);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Please, contact the company support or HR");
+                    }
+                }
+                catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
