@@ -41,7 +41,7 @@ public class supervisorInterface {
     private JTextField txtDate;
     private JTextField txtEmpID;
     private JTextField txtDescription;
-    private JTextField txtTaskTime;
+    private JSpinner txtTaskTime;
     private JButton appoint;
     private JTable table1;
     private JTextField txtTaskTitle;
@@ -290,7 +290,7 @@ public class supervisorInterface {
                 taskTitle= txtTitle.getText();
                 taskDate= txtTaskDate.getText();
                 taskDesc =txtDescription.getText();
-                taskTime = txtTaskTime.getText();
+                taskTime = String.valueOf(txtTaskTime.getInsets());
                 empID = txtEmpID.getText();
 
                 try{
@@ -308,7 +308,7 @@ public class supervisorInterface {
                     txtTitle.setText("");
                     txtTaskDate.setText("");
                     txtDescription.setText("");
-                    txtTaskTime.setText("");
+                    txtTaskTime.getInsets();
                     txtEmpID.setText("");
                     txtTitle.requestFocus();
                 }
