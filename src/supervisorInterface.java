@@ -1,16 +1,35 @@
 import javax.swing.*;
-import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import javax.swing.ImageIcon;
+import java.io.File;
+import javax.swing.JFrame;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 
 public class supervisorInterface {
 
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
+        frame.setContentPane(new supervisorInterface().main);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
+        Image img = imgIcon.getImage();
+        Image newimg = img.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imgIcon = new ImageIcon(newimg);  // transform it back
+        frame.setIconImage(imgIcon.getImage());
+    }
+
     private JPanel main;
-    private JTabbedPane updateAndRemove;
+    private JTabbedPane superTabs;
     private JButton update;
     private JButton addTasks;
     private JButton viewTask;
@@ -37,13 +56,28 @@ public class supervisorInterface {
     private JLabel employeeID;
     private JLabel taskDes;
     private JLabel taskTime;
+    private JScrollPane db;
 
+    Connection con;
+    PreparedStatement pst;
+
+    public void connect() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax", "Masseffect34c1#@");
+            System.out.println("Database connection successful!");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public supervisorInterface() {
-
+        connect();
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image newimg = image.getScaledInstance(80, 80, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         logoIcon = new ImageIcon(newimg);  // transform it back
         appLogo.setIcon(logoIcon);
 
@@ -63,10 +97,10 @@ public class supervisorInterface {
         update.setPreferredSize(new Dimension(250, 40));
 
         //Add task tab
-            //Buttons
+        //Buttons
         appoint.setPreferredSize(new Dimension(250, 40));
 
-            //Text Fields
+        //Text Fields
         txtTitle.setPreferredSize(new Dimension(250, 40));
         txtDescription.setPreferredSize(new Dimension(250, 40));
         txtDate.setPreferredSize(new Dimension(250, 40));
@@ -74,7 +108,7 @@ public class supervisorInterface {
         txtTaskTime.setPreferredSize(new Dimension(250, 40));
 
         //Update and Remove tab
-            //Buttons
+        //Buttons
         searchEmployeeButton.setPreferredSize(new Dimension(150, 30));
         taskTitle.setPreferredSize(new Dimension(150, 30));
         taskDate.setPreferredSize(new Dimension(150, 30));
@@ -83,7 +117,7 @@ public class supervisorInterface {
         updateTask.setPreferredSize(new Dimension(150, 30));
         removeTask.setPreferredSize(new Dimension(150, 30));
 
-            //Text Fields
+        //Text Fields
         txtSearch.setPreferredSize(new Dimension(150, 35));
         taskTime.setPreferredSize(new Dimension(150, 30));
         txtTaskTitle.setPreferredSize(new Dimension(150, 30));
@@ -91,7 +125,6 @@ public class supervisorInterface {
         txtEmployee.setPreferredSize(new Dimension(150, 30));
         txtTaskDesc.setPreferredSize(new Dimension(150, 30));
         txtTasktime.setPreferredSize(new Dimension(150, 30));
-
 
 
         viewTask.addActionListener(new ActionListener() {
@@ -102,23 +135,57 @@ public class supervisorInterface {
         });
 
 
-    }
+        updateTask.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
-        frame.setContentPane(new supervisorInterface().main);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+            }
+        });
+        removeTask.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
-        Image img = imgIcon.getImage();
-        Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        imgIcon = new ImageIcon(newimg);  // transform it back
-        frame.setIconImage(imgIcon.getImage());
-    }
+            }
+        });
+        searchEmployeeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
 
+            }
+        });
+        viewTask.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                superTabs.setSelectedIndex(0);
+
+            }
+        });
+        addTasks.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                superTabs.setSelectedIndex(1);
+
+            }
+        });
+        update.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                superTabs.setSelectedIndex(2);
+
+            }
+        });
+        appoint.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+
+           }
 }
+
+
 
 
