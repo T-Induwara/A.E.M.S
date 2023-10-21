@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.*;
 
 public class adminDashboadrd {
 
@@ -39,10 +40,10 @@ public class adminDashboadrd {
     private JLabel password;
     private JButton addAll;
     private JPanel upOrRemHS;
-    private JButton searchName;
-    private JTextField txtSearch;
+    private JButton searchEmployeeID;
     private JTextField txtName2;
     private JTextField txtAddress2;
+
     private JTextField txtGender2;
     private JTextField txtContNo2;
     private JTextField txtNIC2;
@@ -61,7 +62,7 @@ public class adminDashboadrd {
     private JLabel eMailUR;
     private JTable table1;
     private JLabel title;
-    private JTextField textField1;
+    private JTextField txtSearchID;
 
     public adminDashboadrd() {
 
@@ -105,7 +106,7 @@ public class adminDashboadrd {
 
         //Update/Remove HR or Supervisor
         //Input text areas
-        txtSearch.setPreferredSize(new Dimension(150, 30));
+        txtSearchID.setPreferredSize(new Dimension(150, 30));
         txtName2.setPreferredSize(new Dimension(150, 30));
         txtAddress2.setPreferredSize(new Dimension(150, 30));
         txtGender2.setPreferredSize(new Dimension(150, 30));
@@ -116,9 +117,10 @@ public class adminDashboadrd {
         txtEmail2.setPreferredSize(new Dimension(150, 30));
 
         //Buttons
-        searchName.setPreferredSize(new Dimension(80, 30));
+        searchEmployeeID.setPreferredSize(new Dimension(80, 30));
         updateUR.setPreferredSize(new Dimension(150, 40));
         RemoveUR.setPreferredSize(new Dimension(150, 40));
+
 
 
         add.addActionListener(new ActionListener() {
@@ -143,17 +145,172 @@ public class adminDashboadrd {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                //Add HR or Supervisor
+                String name,gender,nic,position,password,address,email,contNo,salary;
+
+
+                name = txtName.getText();
+                gender= txtGender.getText();
+                nic= txtNIC.getText();
+                position= txtPosition.getText();
+                password= txtPassword.getText();
+                address= txtAddress.getText();
+                email= txtEmail.getText();
+                contNo= txtContact.getText();
+                int No = Integer.parseInt(contNo);
+                salary= txtBasic.getText();
+
+                try{
+                    pst = con.prepareStatement("INSERT INTO employee(name,address,gender,contactNumber,NIC,salary,position,password,email)VALUES (?,?,?,?,?,?,?,?,?)");
+                    pst.setString(1,name);
+                    pst.setString(2,address);
+                    pst.setString(3,gender);
+                    pst.setInt(4,No);
+                    pst.setString(5,nic);
+                    pst.setString(6,salary);
+                    pst.setString(7,position);
+                    pst.setString(8,password);
+                    pst.setString(9,email);
+
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null,"Record Added.......");
+                    //table_load();
+
+                    txtName.setText("");
+                    txtGender.setText("");
+                    txtNIC.setText("");
+                    txtPosition.setText("");
+                    txtPassword.setText("");
+                    txtAddress.setText("");
+                    txtContact.setText("");
+                    txtBasic.setText("");
+                    txtEmail.setText("");
+
+
+                    txtName.requestFocus();
+                }
+
+                catch (SQLException e1){
+                    e1.printStackTrace();
+                }
+
+
             }
         });
-        searchName.addActionListener(new ActionListener() {
+        searchEmployeeID.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
+                try{
+
+                    String empid = txtSearchID.getText();
+
+                    pst = con.prepareStatement("SELECT name,address,gender,contactNumber,NIC,salary,position,password,email from employee where empID=?");
+                    pst.setString(1,empid);
+                    ResultSet rs =pst.executeQuery();
+
+                    if (rs.next()==true){
+                        
+                        String nameUR = rs.getString(1);
+                        String addressUR = rs.getString(2);
+                        String genderUR = rs.getString(3);
+                        int contactUR= rs.getInt(4);
+                        String NIC = rs.getString(5);
+                        String salaryUR = rs.getString(6);
+                        String positionUR = rs.getString(7);
+                        String passwordUR = rs.getString(8);
+                        String emailUR = rs.getString(9);
+                        
+
+                        txtName2.setText(nameUR);
+                        txtAddress2.setText(addressUR);
+                        txtGender2.setText(genderUR);
+                        txtContNo2.setText(String.valueOf(contactUR));
+                        txtNIC2.setText(NIC);
+                        txtBasic2.setText(salaryUR);
+                        txtPosition2.setText(positionUR);
+                        txtPassword.setText(passwordUR);
+                        txtEmail2.setText(emailUR);
+
+
+                    }
+                    else {
+
+                        txtName.setText("");
+                        txtGender.setText("");
+                        txtNIC.setText("");
+                        txtPosition.setText("");
+                        txtPassword.setText("");
+                        txtAddress.setText("");
+                        txtEmail.setText("");
+                        txtContact.setText("");
+                        txtBasic.setText("");
+
+                        JOptionPane.showMessageDialog(null,"Invalid Employee Number.");
+
+                    }
+
+
+                }
+                catch(SQLException ex)
+                {
+                    ex.printStackTrace();
+
+                }
 
             }
         });
         updateUR.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String name,gender,nic,position,password,address,email,contNo,salary;
+
+                name = txtName2.getText();
+                gender= txtGender2.getText();
+                nic= txtNIC2.getText();
+                position= txtPosition2.getText();
+                address= txtAddress2.getText();
+                email= txtEmail2.getText();
+                contNo= txtContNo2.getText();
+                int NoUp = Integer.parseInt(contNo);
+                salary= txtBasic2.getText();
+                password = txtPassword.getText();
+
+                try{
+                    pst = con.prepareStatement("UPDATE empolyee set name =? ,address= ?,gender= ?,contactNumber=?,NIC=?,salary=?,position=?,password=?,email=? where empID= ?");
+                    pst.setString(1,name);
+                    pst.setString(2,address);
+                    pst.setString(3,gender);
+                    pst.setInt(4, NoUp);
+                    pst.setString(5,nic);
+                    pst.setString(6,salary);
+                    pst.setString(7,position);
+                    pst.setString(8,password);
+                    pst.setString(9,email);
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null,"Record Updated.......");
+
+                    //table_load();
+                    txtName.setText("");
+                    txtGender.setText("");
+                    txtNIC.setText("");
+                    txtPosition.setText("");
+                    txtPassword.setText("");
+                    txtAddress.setText("");
+                    txtEmail.setText("");
+                    txtContact.setText("");
+                    txtBasic.setText("");
+
+                }
+
+                catch (SQLException e1){
+                    e1.printStackTrace();
+                }
+
 
             }
         });
