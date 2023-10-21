@@ -122,7 +122,7 @@ public class employeeLogin {
                     char[] userPassword = empPass.getPassword();
                     userPass = new String(userPassword);
 
-                    pst = con.prepareStatement("SELECT empID,email,password FROM employee WHERE email = ?");
+                    pst = con.prepareStatement("SELECT empID,email,password FROM employee WHERE position = 'Employee' AND email = ?");
                     pst.setString(1, userEmail);
                     ResultSet rs = pst.executeQuery();
 
@@ -143,6 +143,8 @@ public class employeeLogin {
                             employeeInterface employeeInterface = new employeeInterface();
                             //Assign JPanel of adminInterface.java to the adminMainPanel object
                             JPanel empPanel = employeeInterface.getMainPanel();
+                            //Passing empID from login page to employee dashboard
+                            employeeInterface.setEmpID(passEmpID);
 
                             mainInterface.frame.setContentPane(empPanel);
                             mainInterface.frame.validate();
@@ -179,6 +181,7 @@ public class employeeLogin {
         });
     }
 
+    //Return loggedIN empID
     public int getEmpID(){
         return passEmpID;
     }
