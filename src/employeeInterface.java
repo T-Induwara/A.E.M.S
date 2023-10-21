@@ -325,7 +325,34 @@ public class employeeInterface {
         requestLeaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    String empRDate,empRTime,empRNote,empRExtra;
 
+                    empRDate = rDateField.getText();
+                    empRTime = rTimeField.getText();
+                    empRNote = rNoteField.getText();
+                    empRExtra = rInfoField.getText();
+
+                    pst = con.prepareStatement("INSERT INTO request(title,description,date,time,empID) VALUES(?,?,?,?,?)");
+                    pst.setString(1, empRNote);
+                    pst.setString(2, empRExtra);
+                    pst.setString(3, empRDate);
+                    pst.setString(4, empRTime);
+                    pst.setInt(5, newEmpID);
+
+                    pst.executeUpdate();
+
+                    JOptionPane.showMessageDialog(null,"Your request sent successfully!");
+
+                    rDateField.setText("");
+                    rTimeField.setText("");
+                    rNoteField.setText("");
+                    rInfoField.setText("");
+
+                }
+                catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
