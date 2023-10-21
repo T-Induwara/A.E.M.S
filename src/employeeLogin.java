@@ -136,7 +136,7 @@ public class employeeLogin {
                         System.out.println("Pass is "+empPass);
                         System.out.println("Entered Pass is "+userPass);
 
-                        if(userPass.equals(empPass)){
+                        if(userPass.equals(empPass)){//Compare user given password and the password in the db
                             //To hide current JPanel
                             Main.setVisible(false);
 
