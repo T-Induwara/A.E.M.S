@@ -189,6 +189,7 @@ public class employeeInterface {
         catch (SQLException ex) {
             ex.printStackTrace();
         }
+        //auto load code ends from here
 
         //Page button actions
         viewEmpBtn.addActionListener(new ActionListener() {
