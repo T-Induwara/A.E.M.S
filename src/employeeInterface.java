@@ -1,3 +1,5 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,8 +8,6 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import java.io.File;
 import javax.swing.JFrame;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -42,7 +42,7 @@ public class employeeInterface {
     private JTextField rTimeField;
     private JTextField rInfoField;
     private JButton requestLeaveButton;
-    private JTable table1;
+    private JTable requestTable;
     private JButton withLeaveReqBtn;
     private JTextField reqNum;
     private JLabel frmName;
@@ -281,6 +281,16 @@ public class employeeInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 empTabs.setSelectedIndex(3);
+
+                try{
+                    pst = con.prepareStatement("SELECT requestID,title,description,date,time FROM request WHERE empID=?");
+                    pst.setInt(1, newEmpID);
+                    ResultSet rs = pst.executeQuery();
+                    requestTable.setModel(DbUtils.resultSetToTableModel(rs));
+                }
+                catch(SQLException e2){
+                    e2.printStackTrace();
+                }
             }
         });
 
