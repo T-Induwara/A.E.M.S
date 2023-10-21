@@ -1,3 +1,5 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -55,31 +57,53 @@ public class supervisorInterface {
     private JLabel taskDate;
     private JLabel taskDescription2;
     private JLabel taskTime2;
-    private JScrollPane db;
+    private JScrollPane table;
     private JLabel taskTitle1;
     private JLabel taskDescription1;
     private JLabel taskTme1;
     private JLabel taskDate1;
     private JLabel employeeID1;
     private JComboBox AMPM;
+    private JComboBox AMPM2;
+
 
     Connection con;
     PreparedStatement pst;
 
     public void connect() {
+
         try {
+
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax", "Masseffect34c1#@");
             System.out.println("Database connection successful!");
+
         } catch (ClassNotFoundException ex) {
+
             ex.printStackTrace();
+
         } catch (SQLException ex) {
+
             ex.printStackTrace();
+        }
+    }
+    void table_load()
+    {
+        try{
+            pst = con.prepareStatement("SELECT * FROM tasks");
+            ResultSet rs =pst.executeQuery();
+            table1.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+
         }
     }
 
     public supervisorInterface() {
         connect();
+        table_load();
 
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
@@ -93,7 +117,9 @@ public class supervisorInterface {
             GraphicsEnvironment font1 = GraphicsEnvironment.getLocalGraphicsEnvironment();
             font1.registerFont(NicoMoji);
             appTitle.setFont(NicoMoji);
+
         } catch (IOException | FontFormatException e) {
+
             e.printStackTrace();
         }
 
@@ -146,30 +172,34 @@ public class supervisorInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String taskTitle,taskDes,taskDate,taskTime;
+                String taskTitle2,taskDes2,taskDate2,taskTime2,empID;
 
-                taskTitle= txtTaskTitle2.getText();
-                taskDes= txtTaskDesc2.getText();
-                taskDate= txtTaskDate2.getText();
-                taskTime= txtTaskTime2.getText();
+                taskTitle2= txtTaskTitle2.getText();
+                taskDes2= txtTaskDesc2.getText();
+                taskDate2= txtTaskDate2.getText();
+                taskTime2= txtTaskTime2.getText();
+                empID= txtSearch2.getText();
 
 
                 try{
-                    pst = con.prepareStatement("UPDATE tasks set taskTite =? ,description= ?,date= ?,time= ?,empID= ?  where empID= ?");
-                    pst.setString(1,taskTitle);
-                    pst.setString(2,taskDes);
-                    pst.setString(3,taskDate);
-                    pst.setString(4,taskTime);
+                    pst = con.prepareStatement("UPDATE tasks set taskTite =? ,description= ?,date= ?,time= ? where empID= ?");
+                    pst.setString(1,taskTitle2);
+                    pst.setString(2,taskDes2);
+                    pst.setString(3,taskDate2);
+                    pst.setString(4,taskTime2);
+                    pst.setString(4,empID);
 
 
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Updated.......");
 
-                    //table_load();
+                    table_load();
+
                     txtTaskTitle2.setText("");
                     txtTaskDesc2.setText("");
                     txtTaskDate2.setText("");
                     txtTaskTime2.setText("");
+
                     txtTaskTitle2.requestFocus();
                 }
 
@@ -195,7 +225,9 @@ public class supervisorInterface {
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Deleted.......");
 
-                    //table_load();
+                    table_load();
+
+
                     txtTaskTitle2.setText("");
                     txtTaskDesc2.setText("");
                     txtTaskDate2.setText("");
@@ -279,6 +311,7 @@ public class supervisorInterface {
 
             }
         });
+
         appoint.addActionListener(new ActionListener() {
 
             @Override
@@ -303,7 +336,10 @@ public class supervisorInterface {
 
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Added.......");
-                    //table_load();
+
+                    table_load();
+
+
                     txtTitle1.setText("");
                     txtTaskDate1.setText("");
                     txtDescription1.setText("");
@@ -320,9 +356,29 @@ public class supervisorInterface {
         });
 
 
+        AMPM.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String value1 =txtTaskTime1.getText()+AMPM.getSelectedItem().toString();
+
+                txtTaskTime1.setText(value1);
+            }
+        });
+        AMPM2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String value2 =txtTaskTime2.getText()+AMPM2.getSelectedItem().toString();
+
+                txtTaskTime2.setText(value2);
+            }
+        });
+    }
+
+
+
 
     }
-}
+
 
 
 
