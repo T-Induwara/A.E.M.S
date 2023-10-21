@@ -65,6 +65,47 @@ public class employeeInterface {
         newEmpID = empID;
     }
 
+    public void autoLoadEmpData(){
+        //auto load the emp info
+        String empName,empAddress,empMail,empPosition,empGender,empNIC;
+        int empNumber;
+        try {
+            System.out.println("My function first id is "+newEmpID);
+
+            pst = con.prepareStatement("SELECT name,address,gender,contactNumber,nic,position,email FROM employee WHERE empID = ?");
+            pst.setInt(1, newEmpID);
+            ResultSet rsAuto = pst.executeQuery();
+
+            if(rsAuto.next()==true){
+                empName = rsAuto.getString(1);
+                empAddress = rsAuto.getString(2);
+                empGender = rsAuto.getString(3);
+                empNumber = rsAuto.getInt(4);
+                empNIC = rsAuto.getString(5);
+                empPosition = rsAuto.getString(6);
+                empMail = rsAuto.getString(7);
+
+                frmName.setText(empName);
+                frmAdd.setText(empAddress);
+                frmMail.setText(empMail);
+                //Convert contact number received from the database from int datatype to string.
+                String eANumber = String.valueOf(empNumber);
+                frmNum.setText(eANumber);
+                frmNIC.setText(empNIC);
+                frmPosition.setText(empPosition);
+                frmGender.setText(empGender);
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Please, contact the company support or HR");
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+            System.err.println("SQL Error: " + ex.getMessage());
+        }
+        //auto load code ends from here
+    }
+
     public void connect(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -154,50 +195,12 @@ public class employeeInterface {
 
         //Withdraw request tab txtfield sizes
         reqNum.setPreferredSize(new Dimension(250, 40));
-
-        //auto load the emp info
-        try {
-            System.out.println("My first id is "+newEmpID);
-
-            pst = con.prepareStatement("SELECT name,address,gender,contactNumber,nic,position,email FROM employee WHERE empID = ?");
-            pst.setInt(1, newEmpID);
-            ResultSet rs = pst.executeQuery();
-
-            if(rs.next()==true){
-                String eName = rs.getString(1);
-                String eAdd = rs.getString(2);
-                String eGender = rs.getString(3);
-                int eNum = rs.getInt(4);
-                String eNIC = rs.getString(5);
-                String ePosition = rs.getString(6);
-                String eEmail = rs.getString(7);
-
-                frmName.setText(eName);
-                frmAdd.setText(eAdd);
-                frmMail.setText(eEmail);
-                //Convert contact number received from the database from int datatype to string.
-                String eNumber = String.valueOf(eNum);
-                frmNum.setText(eNumber);
-                frmNIC.setText(eNIC);
-                frmPosition.setText(ePosition);
-                frmGender.setText(eGender);
-            }
-            else{
-                JOptionPane.showMessageDialog(null,"Please, contact the company support or HR");
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        //auto load code ends from here
-
+        autoLoadEmpData();
         //Page button actions
         viewEmpBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 empTabs.setSelectedIndex(0);
-
-                String empName,empAddress,empMail,empNumber,empPosition,empGender;
 
                 try {
                     System.out.println("My id is "+newEmpID);
@@ -239,6 +242,33 @@ public class employeeInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 empTabs.setSelectedIndex(1);
+
+                try {
+                    pst = con.prepareStatement("SELECT name,address,gender,contactNumber,email FROM employee WHERE empID = ?");
+                    pst.setInt(1, newEmpID);
+                    ResultSet rs = pst.executeQuery();
+
+                    if(rs.next()==true){
+                        String empUName = rs.getString(1);
+                        String empUAddress = rs.getString(2);
+                        String empUGender = rs.getString(3);
+                        int empUNumber = rs.getInt(4);
+                        String empUNumString = String.valueOf(empUNumber);
+                        String empUMail = rs.getString(5);
+
+                        eNameField.setText(empUName);
+                        eAddField.setText(empUAddress);
+                        eEmailField.setText(empUMail);
+                        eNumField.setText(empUNumString);
+                        eGenField.setText(empUGender);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Please, contact the company support or HR");
+                    }
+                }
+                catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         reqLeaveBtn.addActionListener(new ActionListener() {
@@ -251,6 +281,51 @@ public class employeeInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 empTabs.setSelectedIndex(3);
+            }
+        });
+
+        //Update button functionality on Update profile tab
+        upDetailsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String empUDName,empUDAddress,empUDGender,empUDMail,empUDNumber;
+
+                    empUDName = eNameField.getText();
+                    empUDAddress = eAddField.getText();
+                    empUDMail = eEmailField.getText();
+                    empUDNumber = eNumField.getText();
+                    int empUDNewNumber = Integer.parseInt(empUDNumber);
+                    empUDGender = eGenField.getText();
+
+                    pst = con.prepareStatement("UPDATE employee SET name=?,address=?,gender=?,contactNumber=?,email=? WHERE empID = ?");
+                    pst.setString(1, empUDName);
+                    pst.setString(2, empUDAddress);
+                    pst.setString(3, empUDGender);
+                    pst.setInt(4, empUDNewNumber);
+                    pst.setString(5, empUDMail);
+                    pst.setInt(6, newEmpID);
+
+                    pst.executeUpdate();
+
+                    JOptionPane.showMessageDialog(null,"Your details have updated!");
+
+                    eNameField.setText(empUDName);
+                    eAddField.setText(empUDAddress);
+                    eEmailField.setText(empUDMail);
+                    eNumField.setText(empUDNumber);
+                    eGenField.setText(empUDGender);
+
+                }
+                catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        requestLeaveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
