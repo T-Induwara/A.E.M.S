@@ -144,11 +144,12 @@ public class employeeLogin {
                             //Assign JPanel of adminInterface.java to the adminMainPanel object
                             JPanel empPanel = employeeInterface.getMainPanel();
                             //Passing empID from login page to employee dashboard
-                            employeeInterface.setEmpID(passEmpID);
 
                             mainInterface.frame.setContentPane(empPanel);
                             mainInterface.frame.validate();
                             mainInterface.frame.repaint();
+                            //Pass the employee ID to employee interface from the login interface
+                            employeeInterface.setEmpID(passEmpID);
                         }
                         else{
                             JOptionPane.showMessageDialog(null,"Password is incorrect!");
