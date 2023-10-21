@@ -52,6 +52,7 @@ public class employeeInterface {
     private JLabel frmNIC;
     private JLabel frmPosition;
     private JLabel frmGender;
+    private int newEmpID;
 
     Connection con;
     PreparedStatement pst;
@@ -60,6 +61,9 @@ public class employeeInterface {
         return Main;
     }
 
+    public void setEmpID(int empID) {
+        newEmpID = empID;
+    }
 
     public void connect(){
         try {
@@ -151,6 +155,41 @@ public class employeeInterface {
         //Withdraw request tab txtfield sizes
         reqNum.setPreferredSize(new Dimension(250, 40));
 
+        //auto load the emp info
+        try {
+            System.out.println("My first id is "+newEmpID);
+
+            pst = con.prepareStatement("SELECT name,address,gender,contactNumber,nic,position,email FROM employee WHERE empID = ?");
+            pst.setInt(1, newEmpID);
+            ResultSet rs = pst.executeQuery();
+
+            if(rs.next()==true){
+                String eName = rs.getString(1);
+                String eAdd = rs.getString(2);
+                String eGender = rs.getString(3);
+                int eNum = rs.getInt(4);
+                String eNIC = rs.getString(5);
+                String ePosition = rs.getString(6);
+                String eEmail = rs.getString(7);
+
+                frmName.setText(eName);
+                frmAdd.setText(eAdd);
+                frmMail.setText(eEmail);
+                //Convert contact number received from the database from int datatype to string.
+                String eNumber = String.valueOf(eNum);
+                frmNum.setText(eNumber);
+                frmNIC.setText(eNIC);
+                frmPosition.setText(ePosition);
+                frmGender.setText(eGender);
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Please, contact the company support or HR");
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
         //Page button actions
         viewEmpBtn.addActionListener(new ActionListener() {
             @Override
@@ -160,13 +199,10 @@ public class employeeInterface {
                 String empName,empAddress,empMail,empNumber,empPosition,empGender;
 
                 try {
-                    int tempEmpID;
-                    employeeLogin empLogin = new employeeLogin();
-                    tempEmpID = empLogin.getEmpID();
-                    System.out.println("My id is "+tempEmpID);
+                    System.out.println("My id is "+newEmpID);
 
                     pst = con.prepareStatement("SELECT name,address,gender,contactNumber,nic,position,email FROM employee WHERE empID = ?");
-                    pst.setInt(1, tempEmpID);
+                    pst.setInt(1, newEmpID);
                     ResultSet rs = pst.executeQuery();
 
                     if(rs.next()==true){
