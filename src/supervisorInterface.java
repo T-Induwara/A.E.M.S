@@ -6,7 +6,6 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import java.io.File;
 import javax.swing.JFrame;
-import javax.swing.text.JTextComponent;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -37,28 +36,32 @@ public class supervisorInterface {
     private JButton viewTask;
     private JLabel appTitle;
     private JLabel appLogo;
-    private JTextField txtTitle;
-    private JTextField txtDate;
-    private JTextField txtEmpID;
-    private JTextField txtDescription;
-    private JSpinner txtTaskTime;
+    private JTextField txtTitle1;
+    private JTextField txtTaskDate1;
+    private JTextField txtEmpID1;
+    private JTextField txtDescription1;
+    private JTextField txtTaskTime1;
     private JButton appoint;
     private JTable table1;
-    private JTextField txtTaskTitle;
-    private JTextField txtTaskDate;
-    private JTextField txtEmployee;
+    private JTextField txtTaskTitle2;
+    private JTextField txtTaskDate2;
     private JButton updateTask;
-    private JTextField txtTaskDesc;
-    private JTextField txtTasktime;
+    private JTextField txtTaskDesc2;
+    private JTextField txtTaskTime2;
     private JButton removeTask;
-    private JButton searchEmployeeButton;
-    private JTextField txtSearch;
-    private JLabel taskTitle;
+    private JButton searchEmployee;
+    private JTextField txtSearch2;
+    private JLabel taskTitle2;
     private JLabel taskDate;
-    private JLabel employeeID;
-    private JLabel taskDes;
-    private JLabel taskTime;
+    private JLabel taskDescription2;
+    private JLabel taskTime2;
     private JScrollPane db;
+    private JLabel taskTitle1;
+    private JLabel taskDescription1;
+    private JLabel taskTme1;
+    private JLabel taskDate1;
+    private JLabel employeeID1;
+    private JComboBox AMPM;
 
     Connection con;
     PreparedStatement pst;
@@ -104,30 +107,28 @@ public class supervisorInterface {
         appoint.setPreferredSize(new Dimension(250, 40));
 
         //Text Fields
-        txtTitle.setPreferredSize(new Dimension(250, 40));
-        txtDescription.setPreferredSize(new Dimension(250, 40));
-        txtDate.setPreferredSize(new Dimension(250, 40));
-        txtEmpID.setPreferredSize(new Dimension(250, 40));
-        txtTaskTime.setPreferredSize(new Dimension(250, 40));
+        txtTitle1.setPreferredSize(new Dimension(250, 40));
+        txtDescription1.setPreferredSize(new Dimension(250, 40));
+        txtTaskDate1.setPreferredSize(new Dimension(250, 40));
+        txtEmpID1.setPreferredSize(new Dimension(250, 40));
+        txtTaskTime1.setPreferredSize(new Dimension(250, 40));
 
         //Update and Remove tab
         //Buttons
-        searchEmployeeButton.setPreferredSize(new Dimension(150, 30));
-        taskTitle.setPreferredSize(new Dimension(150, 30));
+        searchEmployee.setPreferredSize(new Dimension(150, 30));
+        taskTitle2.setPreferredSize(new Dimension(150, 30));
         taskDate.setPreferredSize(new Dimension(150, 30));
-        employeeID.setPreferredSize(new Dimension(150, 30));
-        taskDes.setPreferredSize(new Dimension(150, 30));
+        taskDescription2.setPreferredSize(new Dimension(150, 30));
         updateTask.setPreferredSize(new Dimension(150, 30));
         removeTask.setPreferredSize(new Dimension(150, 30));
 
         //Text Fields
-        txtSearch.setPreferredSize(new Dimension(150, 35));
-        taskTime.setPreferredSize(new Dimension(150, 30));
-        txtTaskTitle.setPreferredSize(new Dimension(150, 30));
-        txtTaskDate.setPreferredSize(new Dimension(150, 30));
-        txtEmployee.setPreferredSize(new Dimension(150, 30));
-        txtTaskDesc.setPreferredSize(new Dimension(150, 30));
-        txtTasktime.setPreferredSize(new Dimension(150, 30));
+        txtSearch2.setPreferredSize(new Dimension(150, 35));
+        taskTime2.setPreferredSize(new Dimension(150, 30));
+        txtTaskTitle2.setPreferredSize(new Dimension(150, 30));
+        txtTaskDate2.setPreferredSize(new Dimension(150, 30));
+        txtTaskDesc2.setPreferredSize(new Dimension(150, 30));
+        txtTaskTime2.setPreferredSize(new Dimension(150, 30));
 
         //Add task tab
 
@@ -145,13 +146,13 @@ public class supervisorInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String taskTitle,taskDes,taskDate,taskTime,employeeID;
+                String taskTitle,taskDes,taskDate,taskTime;
 
-                taskTitle=txtTaskTitle.getText();
-                taskDes= txtTaskDesc.getText();
-                taskDate=txtTaskDate.getText();
-                taskTime=txtTasktime.getText();
-                employeeID=txtEmployee.getText();
+                taskTitle= txtTaskTitle2.getText();
+                taskDes= txtTaskDesc2.getText();
+                taskDate= txtTaskDate2.getText();
+                taskTime= txtTaskTime2.getText();
+
 
                 try{
                     pst = con.prepareStatement("UPDATE tasks set taskTite =? ,description= ?,date= ?,time= ?,empID= ?  where empID= ?");
@@ -159,18 +160,17 @@ public class supervisorInterface {
                     pst.setString(2,taskDes);
                     pst.setString(3,taskDate);
                     pst.setString(4,taskTime);
-                    pst.setString(5,employeeID);
+
 
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Updated.......");
 
                     //table_load();
-                    txtTaskTitle.setText("");
-                    txtTaskDesc.setText("");
-                    txtTaskDate.setText("");
-                    txtTasktime.setText("");
-                    txtEmployee.setText("");
-                    txtTaskTitle.requestFocus();
+                    txtTaskTitle2.setText("");
+                    txtTaskDesc2.setText("");
+                    txtTaskDate2.setText("");
+                    txtTaskTime2.setText("");
+                    txtTaskTitle2.requestFocus();
                 }
 
                 catch (SQLException e1){
@@ -186,7 +186,7 @@ public class supervisorInterface {
             public void actionPerformed(ActionEvent e) {
                 String empID;
 
-                empID = txtEmployee.getText();
+                empID = txtSearch2.getText();
 
                 try{
                     pst = con.prepareStatement("DELETE from tasks where empID = ?");
@@ -196,12 +196,11 @@ public class supervisorInterface {
                     JOptionPane.showMessageDialog(null,"Record Deleted.......");
 
                     //table_load();
-                    txtTaskTitle.setText("");
-                    txtTaskDesc.setText("");
-                    txtTaskDate.setText("");
-                    txtTasktime.setText("");
-                    txtEmployee.setText("");
-                    txtTaskTitle.requestFocus();
+                    txtTaskTitle2.setText("");
+                    txtTaskDesc2.setText("");
+                    txtTaskDate2.setText("");
+                    txtTaskTime2.setText("");
+                    txtTaskTitle2.requestFocus();
                 }
 
                 catch (SQLException e1){
@@ -211,14 +210,14 @@ public class supervisorInterface {
 
             }
         });
-        searchEmployeeButton.addActionListener(new ActionListener() {
+        searchEmployee.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 try{
 
-                    String empid = txtSearch.getText();
-                    pst = con.prepareStatement("SELECT taskTitle,description,date,time,empID from tasks where empID=?");
+                    String empid = txtSearch2.getText();
+                    pst = con.prepareStatement("SELECT taskTitle,description,date,time from tasks where empID=?");
                     pst.setString(1,empid);
                     ResultSet rs =pst.executeQuery();
 
@@ -227,23 +226,22 @@ public class supervisorInterface {
                         String taskDes = rs.getString(2);
                         String taskDate = rs.getString(3);
                         String taskTime = rs.getString(4);
-                        String employeeID = rs.getString(5);
 
 
-                        txtTaskTitle.setText(taskTitle);
-                        txtTaskDesc.setText(taskDes);
-                        txtTaskDate.setText(taskDate);
-                        txtTasktime.setText(taskTime);
-                        txtEmployee.setText(employeeID);
+                        txtTaskTitle2.setText(taskTitle);
+                        txtTaskDesc2.setText(taskDes);
+                        txtTaskDate2.setText(taskDate);
+
+                        txtTaskTime2.setText(taskTime);
 
                     }
                     else {
 
-                        txtTaskTitle.setText("");
-                        txtTaskDesc.setText("");
-                        txtTaskDate.setText("");
-                        txtTasktime.setText("");
-                        txtEmployee.setText("");
+                        txtTaskTitle2.setText("");
+                        txtTaskDesc2.setText("");
+                        txtTaskDate2.setText("");
+                        txtTaskTime2.setText("");
+
 
                         JOptionPane.showMessageDialog(null,"Invalid Employee Number.");
 
@@ -282,16 +280,17 @@ public class supervisorInterface {
             }
         });
         appoint.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 String taskTitle,taskDate,taskDesc,taskTime,empID;
 
-                taskTitle= txtTitle.getText();
-                taskDate= txtTaskDate.getText();
-                taskDesc =txtDescription.getText();
-                taskTime = String.valueOf(txtTaskTime.getInsets());
-                empID = txtEmpID.getText();
+                taskTitle= txtTitle1.getText();
+                taskDate= txtTaskDate1.getText();
+                taskDesc = txtDescription1.getText();
+                taskTime = txtTaskTime1.getText();
+                empID = txtEmpID1.getText();
 
                 try{
                     pst = con.prepareStatement("INSERT INTO tasks(taskTitle,description,date,time,empID)VALUES (?,?,?,?,?)");
@@ -305,12 +304,12 @@ public class supervisorInterface {
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Added.......");
                     //table_load();
-                    txtTitle.setText("");
-                    txtTaskDate.setText("");
-                    txtDescription.setText("");
-                    txtTaskTime.getInsets();
-                    txtEmpID.setText("");
-                    txtTitle.requestFocus();
+                    txtTitle1.setText("");
+                    txtTaskDate1.setText("");
+                    txtDescription1.setText("");
+                    txtTaskTime1.setText("");
+                    txtEmpID1.setText("");
+                    txtTitle1.requestFocus();
                 }
 
                 catch (SQLException e1){
@@ -321,7 +320,8 @@ public class supervisorInterface {
         });
 
 
-           }
+
+    }
 }
 
 
