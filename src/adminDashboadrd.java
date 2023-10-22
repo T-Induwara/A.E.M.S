@@ -63,6 +63,8 @@ public class adminDashboadrd {
     private JTable table1;
     private JLabel title;
     private JTextField txtSearchID;
+    private JPasswordField txtPassword2;
+    private JLabel password2;
 
     public adminDashboadrd() {
 
@@ -115,11 +117,14 @@ public class adminDashboadrd {
         txtBasic2.setPreferredSize(new Dimension(150, 30));
         txtPosition2.setPreferredSize(new Dimension(150, 30));
         txtEmail2.setPreferredSize(new Dimension(150, 30));
+        txtPassword2.setPreferredSize(new Dimension(150, 30));
+
 
         //Buttons
         searchEmployeeID.setPreferredSize(new Dimension(80, 30));
         updateUR.setPreferredSize(new Dimension(150, 40));
         RemoveUR.setPreferredSize(new Dimension(150, 40));
+        password2.setPreferredSize(new Dimension(150, 40));
 
 
 
@@ -266,45 +271,49 @@ public class adminDashboadrd {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String name,gender,nic,position,password,address,email,contNo,salary;
+               String name,gender,nic,position,password,address,email,contNo,salary,empID;
 
-                name = txtName2.getText();
-                gender= txtGender2.getText();
-                nic= txtNIC2.getText();
-                position= txtPosition2.getText();
+                name=txtName2.getText();
                 address= txtAddress2.getText();
-                email= txtEmail2.getText();
-                contNo= txtContNo2.getText();
-                int NoUp = Integer.parseInt(contNo);
+                gender=txtGender2.getText();
+                contNo=txtContNo2.getText();
+                int No = Integer.parseInt(contNo);
+                nic=txtNIC2.getText();
                 salary= txtBasic2.getText();
-                password = txtPassword.getText();
+                position=txtPosition2.getText();
+                password=txtPassword2.getText();
+                email=txtEmail2.getText();
+                empID=txtSearchID.getText();
+
 
                 try{
-                    pst = con.prepareStatement("UPDATE empolyee set name =? ,address= ?,gender= ?,contactNumber=?,NIC=?,salary=?,position=?,password=?,email=? where empID= ?");
+                    pst = con.prepareStatement("UPDATE employee set name =? ,address= ?,gender= ?,contactNumber =? ,NIC= ?,salary= ?,position =? ,password= ?,email= ? where empID= ?");
                     pst.setString(1,name);
                     pst.setString(2,address);
                     pst.setString(3,gender);
-                    pst.setInt(4, NoUp);
+                    pst.setString(4,contNo);
                     pst.setString(5,nic);
                     pst.setString(6,salary);
                     pst.setString(7,position);
                     pst.setString(8,password);
                     pst.setString(9,email);
+                    pst.setString(10,empID);
 
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Updated.......");
 
-                    //table_load();
-                    txtName.setText("");
-                    txtGender.setText("");
-                    txtNIC.setText("");
-                    txtPosition.setText("");
-                    txtPassword.setText("");
-                    txtAddress.setText("");
-                    txtEmail.setText("");
-                    txtContact.setText("");
-                    txtBasic.setText("");
+                   // table_load();
+                    txtName2.setText("");
+                    txtAddress2.setText("");
+                    txtGender2.setText("");
+                    txtContNo2.setText("");
+                    txtNIC2.setText("");
+                    txtBasic2.setText("");
+                    txtPosition2.setText("");
+                    txtPassword2.setText("");
+                    txtEmail2.setText("");
 
+                    txtSearchID.requestFocus();
                 }
 
                 catch (SQLException e1){
@@ -317,6 +326,35 @@ public class adminDashboadrd {
         RemoveUR.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String empID;
+
+                empID = txtSearchID.getText();
+
+                try{
+                    pst = con.prepareStatement("DELETE from employee where empID= ?");
+                    pst.setString(1,empID);
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null,"Record Deleted.......");
+
+                    //table_load();
+                    txtName2.setText("");
+                    txtAddress2.setText("");
+                    txtGender2.setText("");
+                    txtContNo2.setText("");
+                    txtNIC2.setText("");
+                    txtBasic2.setText("");
+                    txtPosition2.setText("");
+                    txtPassword2.setText("");
+                    txtEmail2.setText("");
+
+                    txtSearchID.requestFocus();
+                }
+
+                catch (SQLException e1){
+                    e1.printStackTrace();
+                }
+
 
             }
         });
