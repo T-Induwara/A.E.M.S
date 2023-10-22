@@ -1,3 +1,5 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,14 +26,13 @@ public class adminDashboadrd {
     private JTextField txtAddress;
     private JLabel name;
     private JLabel address;
-    private JTextField txtGender;
+    private JComboBox MF;
     private JTextField txtNIC;
     private JTextField txtContact;
     private JTextField txtBasic;
     private JTextField txtPosition;
     private JTextField txtEmail;
     private JTextField txtPassword;
-    private JLabel gender;
     private JLabel conNo;
     private JLabel nic;
     private JLabel basicSalary;
@@ -60,15 +61,21 @@ public class adminDashboadrd {
     private JLabel basicUR;
     private JLabel positionUR;
     private JLabel eMailUR;
-    private JTable table1;
     private JLabel title;
     private JTextField txtSearchID;
     private JPasswordField txtPassword2;
     private JLabel password2;
+    private JTable table1;
+    private JTextField txtGender;
+    private JComboBox HS;
+    private JLabel gender;
+    private JComboBox MF2;
+    private JComboBox HS2;
 
     public adminDashboadrd() {
 
         connect();
+        table_load();
 
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
@@ -98,13 +105,14 @@ public class adminDashboadrd {
         //Input text areas
         txtName.setPreferredSize(new Dimension(150, 30));
         txtAddress.setPreferredSize(new Dimension(150, 30));
-        txtGender.setPreferredSize(new Dimension(150, 30));
+        MF.setPreferredSize(new Dimension(150, 30));
         txtContact.setPreferredSize(new Dimension(150, 30));
         txtNIC.setPreferredSize(new Dimension(150, 30));
         txtBasic.setPreferredSize(new Dimension(150, 30));
         txtPosition.setPreferredSize(new Dimension(150, 30));
         txtEmail.setPreferredSize(new Dimension(150, 30));
         txtPassword.setPreferredSize(new Dimension(150, 30));
+        txtGender.setPreferredSize(new Dimension(150, 30));
 
         //Update/Remove HR or Supervisor
         //Input text areas
@@ -180,7 +188,8 @@ public class adminDashboadrd {
 
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Added.......");
-                    //table_load();
+
+                    table_load();
 
                     txtName.setText("");
                     txtGender.setText("");
@@ -302,7 +311,8 @@ public class adminDashboadrd {
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Updated.......");
 
-                   // table_load();
+                   table_load();
+
                     txtName2.setText("");
                     txtAddress2.setText("");
                     txtGender2.setText("");
@@ -337,7 +347,8 @@ public class adminDashboadrd {
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Deleted.......");
 
-                    //table_load();
+                    table_load();
+
                     txtName2.setText("");
                     txtAddress2.setText("");
                     txtGender2.setText("");
@@ -355,6 +366,42 @@ public class adminDashboadrd {
                     e1.printStackTrace();
                 }
 
+
+            }
+        });
+        MF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String value1 = MF.getSelectedItem().toString();
+
+                txtGender.setText(value1);
+
+            }
+        });
+        HS.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String value2 = HS.getSelectedItem().toString();
+
+                txtPosition.setText(value2);
+
+            }
+        });
+        MF2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String value4 = MF.getSelectedItem().toString();
+
+                txtGender2.setText(value4);
+
+            }
+        });
+        HS2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String value3 = HS.getSelectedItem().toString();
+
+                txtPosition2.setText(value3);
 
             }
         });
@@ -389,6 +436,20 @@ public class adminDashboadrd {
         catch (SQLException ex)
         {
             ex.printStackTrace();
+        }
+
+    }
+    void table_load()
+    {
+        try{
+            pst = con.prepareStatement("SELECT * FROM employee");
+            ResultSet rs =pst.executeQuery();
+            table1.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+
         }
     }
 }
