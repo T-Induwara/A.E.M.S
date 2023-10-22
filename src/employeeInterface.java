@@ -122,6 +122,18 @@ public class employeeInterface {
         }
     }
 
+    void leaveTableLoad(){
+        try{
+            pst = con.prepareStatement("SELECT requestID,title,description,date,time FROM request WHERE empID=?");
+            pst.setInt(1, newEmpID);
+            ResultSet rs = pst.executeQuery();
+            requestTable.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public employeeInterface() {
         connect();
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
@@ -362,6 +374,28 @@ public class employeeInterface {
                 }
                 catch (SQLException ex) {
                     ex.printStackTrace();
+                }
+            }
+        });
+        withLeaveReqBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String empWLID = reqNum.getText();
+
+                try{
+                    pst = con.prepareStatement("DELETE FROM request WHERE requestID = ?");
+                    int reqID = Integer.parseInt(empWLID);
+                    pst.setInt(1,reqID);
+                    pst.executeUpdate();
+;
+                    JOptionPane.showMessageDialog(null,"Request deleted successfully!");
+
+                    leaveTableLoad();
+
+                    reqNum.setText("");
+                }
+                catch(SQLException e4){
+                    e4.printStackTrace();
                 }
             }
         });
