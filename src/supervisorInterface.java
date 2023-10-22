@@ -172,33 +172,31 @@ public class supervisorInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String taskTitle2,taskDes2,taskDate2,taskTime2,empID;
+                String taskTitle,taskDate,taskDesc,taskTime,empID;
 
-                taskTitle2= txtTaskTitle2.getText();
-                taskDes2= txtTaskDesc2.getText();
-                taskDate2= txtTaskDate2.getText();
-                taskTime2= txtTaskTime2.getText();
-                empID= txtSearch2.getText();
-
+                taskTitle=txtTaskTitle2.getText();
+                taskDate= txtTaskDate2.getText();
+                taskDesc=txtTaskDesc2.getText();
+                taskTime=txtTaskTime2.getText();
+                empID=txtSearch2.getText();
 
                 try{
-                    pst = con.prepareStatement("UPDATE tasks set taskTite =? ,description= ?,date= ?,time= ? where empID= ?");
-                    pst.setString(1,taskTitle2);
-                    pst.setString(2,taskDes2);
-                    pst.setString(3,taskDate2);
-                    pst.setString(4,taskTime2);
-                    pst.setString(4,empID);
-
+                    pst = con.prepareStatement("UPDATE tasks set taskTitle =? ,description= ?,date= ?,time= ? where empID= ?");
+                    pst.setString(1,taskTitle);
+                    pst.setString(2,taskDate);
+                    pst.setString(3,taskDesc);
+                    pst.setString(4,taskTime);
+                    pst.setString(5,empID);
 
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Updated.......");
 
                     table_load();
-
                     txtTaskTitle2.setText("");
-                    txtTaskDesc2.setText("");
                     txtTaskDate2.setText("");
+                    txtTaskDesc2.setText("");
                     txtTaskTime2.setText("");
+                    txtSearch2.setText("");
 
                     txtTaskTitle2.requestFocus();
                 }
@@ -206,7 +204,6 @@ public class supervisorInterface {
                 catch (SQLException e1){
                     e1.printStackTrace();
                 }
-
 
 
             }
