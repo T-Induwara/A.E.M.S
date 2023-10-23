@@ -8,6 +8,7 @@ import java.io.File;
 import javax.swing.JFrame;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,17 +19,19 @@ public class employeeLogin {
     private JLabel appTitle;
     private JLabel appDesc;
     private JTextField empUsername;
-    private JTextField empPass;
+    private JPasswordField empPass;
     private JButton loginBtn;
     private JButton returnBtn;
     private JLabel appLogo;
+    int passEmpID = 2;
+
+    Connection con;
+    PreparedStatement pst;
 
     public JPanel getMainPanel() {
         return Main;
     }
 
-    Connection con;
-    PreparedStatement pst;
     public void connect(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -111,7 +114,54 @@ public class employeeLogin {
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String userEmail,userPass;
 
+                try {
+                    userEmail = empUsername.getText();
+                    //Convert String array into String variable
+                    char[] userPassword = empPass.getPassword();
+                    userPass = new String(userPassword);
+
+                    pst = con.prepareStatement("SELECT empID,email,password FROM employee WHERE position = 'Employee' AND email = ?");
+                    pst.setString(1, userEmail);
+                    ResultSet rs = pst.executeQuery();
+
+                    if(rs.next()==true){
+                        String empID = rs.getString(1);
+                        passEmpID = Integer.parseInt(empID);
+                        //check code
+                        System.out.println("My ID in login page is "+passEmpID);
+                        String empEmail = rs.getString(2);
+                        String empPass = rs.getString(3);
+                        System.out.println("Pass is "+empPass);
+                        System.out.println("Entered Pass is "+userPass);
+
+                        if(userPass.equals(empPass)){//Compare user given password and the password in the db
+                            //To hide current JPanel
+                            Main.setVisible(false);
+
+                            employeeInterface employeeInterface = new employeeInterface();
+                            //Assign JPanel of adminInterface.java to the adminMainPanel object
+                            JPanel empPanel = employeeInterface.getMainPanel();
+                            //Passing empID from login page to employee dashboard
+
+                            mainInterface.frame.setContentPane(empPanel);
+                            mainInterface.frame.validate();
+                            mainInterface.frame.repaint();
+                            //Pass the employee ID to employee interface from the login interface
+                            employeeInterface.setEmpID(passEmpID);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null,"Password is incorrect!");
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Please check your email again!");
+                    }
+                }
+                catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -130,6 +180,11 @@ public class employeeLogin {
                 mainInterface.frame.repaint();
             }
         });
+    }
+
+    //Return loggedIN empID
+    public int getEmpID(){
+        return passEmpID;
     }
 
     public static void main(String[] args) {
