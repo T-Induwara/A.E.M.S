@@ -72,6 +72,10 @@ public class adminDashboadrd {
     private JComboBox MF2;
     private JComboBox HS2;
 
+    public JPanel getMainPanel() {
+        return Main;
+    }
+
     public adminDashboadrd() {
 
         connect();
