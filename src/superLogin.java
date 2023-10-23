@@ -7,6 +7,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.*;
 
 public class superLogin {
     private JPanel Main;
@@ -14,15 +15,35 @@ public class superLogin {
     private JLabel appTitle;
     private JLabel appDesc;
     private JTextField superUsername;
-    private JTextField superPass;
+    private JPasswordField superPass;
     private JButton loginBtn;
     private JButton returnBtn;
+    Connection con;
+    PreparedStatement pst;
 
     public JPanel getMainPanel() {
         return Main;
     }
 
+    public void connect(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax","Masseffect34c1#@");
+            System.out.println("Database connection successful!");
+        }
+        catch (ClassNotFoundException ex)
+        {
+            ex.printStackTrace();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
     public superLogin() {
+        connect();
+
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -86,7 +107,54 @@ public class superLogin {
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String userEmail,userPass;
 
+                try {
+                    userEmail = superUsername.getText();
+                    //Convert String array into String variable
+                    char[] userPassword = superPass.getPassword();
+                    userPass = new String(userPassword);
+
+                    pst = con.prepareStatement("SELECT empID,email,password FROM employee WHERE position = 'Supervisor' AND email = ?");
+                    pst.setString(1, userEmail);
+                    ResultSet rs = pst.executeQuery();
+
+                    if(rs.next()==true){
+                        String empID = rs.getString(1);
+                        //passEmpID = Integer.parseInt(empID);
+                        //check code
+                        //System.out.println("My ID in login page is "+passEmpID);
+                        String empEmail = rs.getString(2);
+                        String empPass = rs.getString(3);
+                        System.out.println("Pass is "+empPass);
+                        System.out.println("Entered Pass is "+userPass);
+
+                        if(userPass.equals(empPass)){//Compare user given password and the password in the db
+                            //To hide current JPanel
+                            Main.setVisible(false);
+
+                            supervisorInterface supervisorInterface = new supervisorInterface();
+                            //Assign JPanel of adminInterface.java to the adminMainPanel object
+                            JPanel empPanel = supervisorInterface.getMainPanel();
+                            //Passing empID from login page to employee dashboard
+
+                            mainInterface.frame.setContentPane(empPanel);
+                            mainInterface.frame.validate();
+                            mainInterface.frame.repaint();
+                            //Pass the employee ID to employee interface from the login interface
+                            //employeeInterface.setEmpID(passEmpID);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null,"Password is incorrect!");
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Please check your email again!");
+                    }
+                }
+                catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         returnBtn.addActionListener(new ActionListener() {

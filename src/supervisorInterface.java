@@ -70,6 +70,10 @@ public class supervisorInterface {
     Connection con;
     PreparedStatement pst;
 
+    public JPanel getMainPanel() {
+        return main;
+    }
+
     public void connect() {
 
         try {
