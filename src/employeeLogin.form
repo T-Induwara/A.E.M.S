@@ -68,7 +68,7 @@
             <properties>
               <background color="-1"/>
               <foreground color="-14134662"/>
-              <text value=""/>
+              <text value="Enter your email address"/>
               <toolTipText value="Enter you employee email."/>
             </properties>
           </component>
