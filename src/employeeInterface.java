@@ -207,7 +207,7 @@ public class employeeInterface {
 
         //Withdraw request tab txtfield sizes
         reqNum.setPreferredSize(new Dimension(250, 40));
-        autoLoadEmpData();
+
         //Page button actions
         viewEmpBtn.addActionListener(new ActionListener() {
             @Override
