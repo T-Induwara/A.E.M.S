@@ -53,9 +53,8 @@ public class employeeInterface {
     private JLabel frmPosition;
     private JLabel frmGender;
     private int newEmpID;
-
-    Connection con;
-    PreparedStatement pst;
+    private Connection con;
+    private PreparedStatement pst;
 
     public JPanel getMainPanel() {
         return Main;
@@ -63,63 +62,6 @@ public class employeeInterface {
 
     public void setEmpID(int empID) {
         newEmpID = empID;
-    }
-
-    public void autoLoadEmpData(){
-        //auto load the emp info
-        String empName,empAddress,empMail,empPosition,empGender,empNIC;
-        int empNumber;
-        try {
-            System.out.println("My function first id is "+newEmpID);
-
-            pst = con.prepareStatement("SELECT name,address,gender,contactNumber,nic,position,email FROM employee WHERE empID = ?");
-            pst.setInt(1, newEmpID);
-            ResultSet rsAuto = pst.executeQuery();
-
-            if(rsAuto.next()==true){
-                empName = rsAuto.getString(1);
-                empAddress = rsAuto.getString(2);
-                empGender = rsAuto.getString(3);
-                empNumber = rsAuto.getInt(4);
-                empNIC = rsAuto.getString(5);
-                empPosition = rsAuto.getString(6);
-                empMail = rsAuto.getString(7);
-
-                frmName.setText(empName);
-                frmAdd.setText(empAddress);
-                frmMail.setText(empMail);
-                //Convert contact number received from the database from int datatype to string.
-                String eANumber = String.valueOf(empNumber);
-                frmNum.setText(eANumber);
-                frmNIC.setText(empNIC);
-                frmPosition.setText(empPosition);
-                frmGender.setText(empGender);
-            }
-            else{
-                JOptionPane.showMessageDialog(null,"Please, contact the company support or HR");
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-            System.err.println("SQL Error: " + ex.getMessage());
-        }
-        //auto load code ends from here
-    }
-
-    public void connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax","Masseffect34c1#@");
-            System.out.println("Database connection successful!");
-        }
-        catch (ClassNotFoundException ex)
-        {
-            ex.printStackTrace();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
     }
 
     void leaveTableLoad(){
@@ -135,7 +77,12 @@ public class employeeInterface {
     }
 
     public employeeInterface() {
-        connect();
+        DBCredentials dnCons = new DBCredentials();
+        dnCons.connect();
+
+        con = DBCredentials.getConnection();
+        pst = DBCredentials.getPreparedStatement();
+
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
