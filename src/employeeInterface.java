@@ -319,10 +319,12 @@ public class employeeInterface {
                     empUDNumber = eNumField.getText();
                     empUDGender = eGenField.getText();
 
+                    //Check number field only contains numbers
                     if(empUDNumber.matches(".*[a-zA-Z]+.*")){
                         JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
                     }
                     else{
+                        //Check number field character length is 10
                         if(empUDNumber.length() != 10){
                             JOptionPane.showMessageDialog(null,"The mobile number must contain 10 numbers!");
                         }
