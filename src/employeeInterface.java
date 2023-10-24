@@ -317,26 +317,37 @@ public class employeeInterface {
                     empUDAddress = eAddField.getText();
                     empUDMail = eEmailField.getText();
                     empUDNumber = eNumField.getText();
-                    int empUDNewNumber = Integer.parseInt(empUDNumber);
                     empUDGender = eGenField.getText();
 
-                    pst = con.prepareStatement("UPDATE employee SET name=?,address=?,gender=?,contactNumber=?,email=? WHERE empID = ?");
-                    pst.setString(1, empUDName);
-                    pst.setString(2, empUDAddress);
-                    pst.setString(3, empUDGender);
-                    pst.setInt(4, empUDNewNumber);
-                    pst.setString(5, empUDMail);
-                    pst.setInt(6, newEmpID);
+                    if(empUDNumber.matches(".*[a-zA-Z]+.*")){
+                        JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
+                    }
+                    else{
+                        if(empUDNumber.length() != 10){
+                            JOptionPane.showMessageDialog(null,"The mobile number must contain 10 numbers!");
+                        }
+                        else{
+                            int empUDNewNumber = Integer.parseInt(empUDNumber);
 
-                    pst.executeUpdate();
+                            pst = con.prepareStatement("UPDATE employee SET name=?,address=?,gender=?,contactNumber=?,email=? WHERE empID = ?");
+                            pst.setString(1, empUDName);
+                            pst.setString(2, empUDAddress);
+                            pst.setString(3, empUDGender);
+                            pst.setInt(4, empUDNewNumber);
+                            pst.setString(5, empUDMail);
+                            pst.setInt(6, newEmpID);
 
-                    JOptionPane.showMessageDialog(null,"Your details have updated!");
+                            pst.executeUpdate();
 
-                    eNameField.setText(empUDName);
-                    eAddField.setText(empUDAddress);
-                    eEmailField.setText(empUDMail);
-                    eNumField.setText(empUDNumber);
-                    eGenField.setText(empUDGender);
+                            JOptionPane.showMessageDialog(null,"Your details have updated!");
+
+                            eNameField.setText(empUDName);
+                            eAddField.setText(empUDAddress);
+                            eEmailField.setText(empUDMail);
+                            eNumField.setText(empUDNumber);
+                            eGenField.setText(empUDGender);
+                        }
+                    }
 
                 }
                 catch (SQLException ex) {
