@@ -72,6 +72,10 @@ public class adminDashboadrd {
     private JComboBox MF2;
     private JComboBox HS2;
 
+    public JPanel getMainPanel() {
+        return Main;
+    }
+
     public adminDashboadrd() {
 
         connect();
@@ -158,7 +162,6 @@ public class adminDashboadrd {
         addAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 //Add HR or Supervisor
                 try {
                     String name,gender,nic,position,password,address,email,contNo,salary,empID;
@@ -214,7 +217,6 @@ public class adminDashboadrd {
                 catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-
 
             }
         });
