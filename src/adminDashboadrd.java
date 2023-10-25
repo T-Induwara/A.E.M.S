@@ -241,6 +241,7 @@ public class adminDashboadrd {
                         String salaryUR = rs.getString(6);
                         String positionUR = rs.getString(7);
                         String passwordUR = rs.getString(8);
+                        System.out.println("Password is "+passwordUR);
                         String emailUR = rs.getString(9);
                         
 
@@ -251,7 +252,7 @@ public class adminDashboadrd {
                         txtNIC2.setText(NIC);
                         txtBasic2.setText(salaryUR);
                         txtPosition2.setText(positionUR);
-                        txtPassword.setText(passwordUR);
+                        txtPassword2.setText(passwordUR);
                         txtEmail2.setText(emailUR);
 
 
