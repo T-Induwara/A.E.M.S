@@ -234,7 +234,7 @@ public class adminDashboadrd {
                     ResultSet rs =pst.executeQuery();
 
                     if (rs.next()==true){
-                        
+
                         String nameUR = rs.getString(1);
                         String addressUR = rs.getString(2);
                         String genderUR = rs.getString(3);
@@ -245,7 +245,7 @@ public class adminDashboadrd {
                         String passwordUR = rs.getString(8);
                         System.out.println("Password is "+passwordUR);
                         String emailUR = rs.getString(9);
-                        
+
 
                         txtName2.setText(nameUR);
                         txtAddress2.setText(addressUR);
