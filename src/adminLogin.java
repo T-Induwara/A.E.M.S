@@ -42,6 +42,7 @@ public class adminLogin {
             ex.printStackTrace();
         }
     }
+
     public adminLogin() {
         connect();
 
