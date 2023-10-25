@@ -72,6 +72,10 @@ public class adminDashboadrd {
     private JComboBox MF2;
     private JComboBox HS2;
 
+    public JPanel getMainPanel() {
+        return Main;
+    }
+
     public adminDashboadrd() {
 
         connect();
@@ -146,6 +150,7 @@ public class adminDashboadrd {
             @Override
             public void actionPerformed(ActionEvent e) {
                 adminTabs.setSelectedIndex(0);
+                table_load();
             }
         });
         update.addActionListener(new ActionListener() {
@@ -157,58 +162,61 @@ public class adminDashboadrd {
         addAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 //Add HR or Supervisor
-                String name,gender,nic,position,password,address,email,contNo,salary;
+                try {
+                    String name,gender,nic,position,password,address,email,contNo,salary,empID;
 
+                    name = txtName.getText();
+                    address = txtAddress.getText();
+                    gender = txtGender.getText();
+                    contNo = txtContact.getText();
+                    nic = txtNIC.getText();
+                    salary = txtBasic.getText();
+                    position = txtPosition.getText();
+                    password = txtPassword.getText();
+                    email = txtEmail.getText();
+                    empID = txtSearchID.getText();
 
-                name = txtName.getText();
-                gender= txtGender.getText();
-                nic= txtNIC.getText();
-                position= txtPosition.getText();
-                password= txtPassword.getText();
-                address= txtAddress.getText();
-                email= txtEmail.getText();
-                contNo= txtContact.getText();
-                int No = Integer.parseInt(contNo);
-                salary= txtBasic.getText();
+                    if(contNo.matches(".*[a-zA-Z]+.*")){
+                        JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
+                    }
+                    else{
+                        if(contNo.length() != 10){
+                            JOptionPane.showMessageDialog(null,"The mobile number must contain 10 numbers!");
+                        }
+                        else{
+                            int no = Integer.parseInt(contNo);
 
-                try{
-                    pst = con.prepareStatement("INSERT INTO employee(name,address,gender,contactNumber,NIC,salary,position,password,email)VALUES (?,?,?,?,?,?,?,?,?)");
-                    pst.setString(1,name);
-                    pst.setString(2,address);
-                    pst.setString(3,gender);
-                    pst.setInt(4,No);
-                    pst.setString(5,nic);
-                    pst.setString(6,salary);
-                    pst.setString(7,position);
-                    pst.setString(8,password);
-                    pst.setString(9,email);
+                            pst = con.prepareStatement("INSERT INTO employee (name ,address ,gender ,contactNumber ,Nic ,salary , position , password , email) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            pst.setString(1, name);
+                            pst.setString(2, address);
+                            pst.setString(3, gender);
+                            pst.setInt(4, no);
+                            pst.setString(5, nic);
+                            pst.setString(6, salary);
+                            pst.setString(7,position);
+                            pst.setString(8,password);
+                            pst.setString(9, email);
 
+                            pst.executeUpdate();
 
-                    pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"Record Added.......");
+                            JOptionPane.showMessageDialog(null,"Record added!");
+                            txtName.setText(name);
+                            txtAddress.setText(address);
+                            txtGender.setText(gender);
+                            txtContact.setText(contNo);
+                            txtNIC.setText(nic);
+                            txtBasic.setText(salary);
+                            txtPosition.setText(position);
+                            txtPassword.setText(password);
+                            txtEmail.setText(email);
+                        }
+                    }
 
-                    table_load();
-
-                    txtName.setText("");
-                    txtGender.setText("");
-                    txtNIC.setText("");
-                    txtPosition.setText("");
-                    txtPassword.setText("");
-                    txtAddress.setText("");
-                    txtContact.setText("");
-                    txtBasic.setText("");
-                    txtEmail.setText("");
-
-
-                    txtName.requestFocus();
                 }
-
-                catch (SQLException e1){
-                    e1.printStackTrace();
+                catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
-
 
             }
         });
@@ -235,6 +243,7 @@ public class adminDashboadrd {
                         String salaryUR = rs.getString(6);
                         String positionUR = rs.getString(7);
                         String passwordUR = rs.getString(8);
+                        System.out.println("Password is "+passwordUR);
                         String emailUR = rs.getString(9);
                         
 
@@ -245,7 +254,7 @@ public class adminDashboadrd {
                         txtNIC2.setText(NIC);
                         txtBasic2.setText(salaryUR);
                         txtPosition2.setText(positionUR);
-                        txtPassword.setText(passwordUR);
+                        txtPassword2.setText(passwordUR);
                         txtEmail2.setText(emailUR);
 
 
@@ -280,59 +289,66 @@ public class adminDashboadrd {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-               String name,gender,nic,position,password,address,email,contNo,salary,empID;
 
-                name=txtName2.getText();
-                address= txtAddress2.getText();
-                gender=txtGender2.getText();
-                contNo=txtContNo2.getText();
-                int No = Integer.parseInt(contNo);
-                nic=txtNIC2.getText();
-                salary= txtBasic2.getText();
-                position=txtPosition2.getText();
-                password=txtPassword2.getText();
-                email=txtEmail2.getText();
-                empID=txtSearchID.getText();
+                try {
+                    String name,gender,nic,position,password,address,email,contNo,salary,empID;
 
+                    name = txtName2.getText();
+                    address = txtAddress2.getText();
+                    gender = txtGender2.getText();
+                    contNo = txtContNo2.getText();
+                    nic = txtNIC2.getText();
+                    salary = txtBasic2.getText();
+                    position = txtPosition2.getText();
+                    password = txtPassword2.getText();
+                    email = txtEmail2.getText();
+                    empID = txtSearchID.getText();
 
-                try{
-                    pst = con.prepareStatement("UPDATE employee set name =? ,address= ?,gender= ?,contactNumber =? ,NIC= ?,salary= ?,position =? ,password= ?,email= ? where empID= ?");
-                    pst.setString(1,name);
-                    pst.setString(2,address);
-                    pst.setString(3,gender);
-                    pst.setString(4,contNo);
-                    pst.setString(5,nic);
-                    pst.setString(6,salary);
-                    pst.setString(7,position);
-                    pst.setString(8,password);
-                    pst.setString(9,email);
-                    pst.setString(10,empID);
+                    if(contNo.matches(".*[a-zA-Z]+.*")){
+                        JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
+                    }
+                    else{
+                        if(contNo.length() != 10){
+                            JOptionPane.showMessageDialog(null,"The mobile number must contain 10 numbers!");
+                        }
+                        else{
+                            int no = Integer.parseInt(contNo);
 
-                    pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"Record Updated.......");
+                            pst = con.prepareStatement("UPDATE employee SET name=?,address=?,gender=?,contactNumber=?,Nic=?,salary=?, position=?, password=?, email=? WHERE empID = ?");
+                            pst.setString(1, name);
+                            pst.setString(2, address);
+                            pst.setString(3, gender);
+                            pst.setInt(4, no);
+                            pst.setString(5, nic);
+                            pst.setString(6, salary);
+                            pst.setString(7,position);
+                            pst.setString(8,password);
+                            pst.setString(9, email);
+                            pst.setString(10,empID);
 
-                   table_load();
+                            pst.executeUpdate();
 
-                    txtName2.setText("");
-                    txtAddress2.setText("");
-                    txtGender2.setText("");
-                    txtContNo2.setText("");
-                    txtNIC2.setText("");
-                    txtBasic2.setText("");
-                    txtPosition2.setText("");
-                    txtPassword2.setText("");
-                    txtEmail2.setText("");
+                            JOptionPane.showMessageDialog(null,"Your details have updated!");
+                            txtName2.setText(name);
+                            txtAddress2.setText(address);
+                            txtGender2.setText(gender);
+                            txtContNo2.setText(contNo);
+                            txtNIC2.setText(nic);
+                            txtBasic2.setText(salary);
+                            txtPosition2.setText(position);
+                            txtPassword2.setText(password);
+                            txtEmail2.setText(email);
+                        }
+                    }
 
-                    txtSearchID.requestFocus();
                 }
-
-                catch (SQLException e1){
-                    e1.printStackTrace();
+                catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
-
-
             }
         });
+
+
         RemoveUR.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -442,7 +458,7 @@ public class adminDashboadrd {
     void table_load()
     {
         try{
-            pst = con.prepareStatement("SELECT * FROM employee");
+            pst = con.prepareStatement("SELECT empID,name,address,gender,contactNumber,NIC,salary,position,email FROM employee");
             ResultSet rs =pst.executeQuery();
             table1.setModel(DbUtils.resultSetToTableModel(rs));
         }
