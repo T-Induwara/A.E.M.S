@@ -326,8 +326,8 @@ public class supervisorInterface {
                 try{
                     pst = con.prepareStatement("UPDATE tasks set taskTitle =? ,description= ?,date= ?,time= ? where empID= ?");
                     pst.setString(1,taskTitle);
-                    pst.setString(2,taskDate);
-                    pst.setString(3,taskDesc);
+                    pst.setString(2,taskDesc);
+                    pst.setString(3,taskDate);
                     pst.setString(4,taskTime);
                     pst.setString(5,empID);
 
@@ -335,6 +335,7 @@ public class supervisorInterface {
                     JOptionPane.showMessageDialog(null,"Record Updated.......");
 
                     table_load();
+
                     txtTaskTitle2.setText("");
                     txtTaskDate2.setText("");
                     txtTaskDesc2.setText("");
