@@ -54,8 +54,8 @@ public class supervisorInterface {
     private JComboBox AMPM2ComboBox;
 
 
-    Connection con;
-    PreparedStatement pst;
+    private Connection con;
+    private PreparedStatement pst;
 
 
     public JPanel getMainPanel() {
@@ -64,25 +64,7 @@ public class supervisorInterface {
 
     }
 
-    public void connect() {
 
-        //database connection added
-
-        try {
-
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax", "Masseffect34c1#@");
-            System.out.println("Database connection successful!");
-
-        } catch (ClassNotFoundException ex) {
-
-            ex.printStackTrace();
-
-        } catch (SQLException ex) {
-
-            ex.printStackTrace();
-        }
-    }
     void table_load()
     {
         //view appoint task table loading method
@@ -102,7 +84,12 @@ public class supervisorInterface {
     }
 
     public supervisorInterface() {
-        connect();
+        DBCredentials dbCons = new DBCredentials();
+        dbCons.connect();
+
+        con = DBCredentials.getConnection();
+        pst = DBCredentials.getPreparedStatement();
+
         table_load();
 
         //logo added inti interface
