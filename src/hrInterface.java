@@ -75,6 +75,7 @@ public class hrInterface {
     }
     public hrInterface() {
         connect();
+        table_load();
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -243,23 +244,26 @@ public class hrInterface {
                         String name = rs.getString(1);
                         String address = rs.getString(2);
                         String gender = rs.getString(3);
-                        String contactNumber = rs.getString(4);
+                        int contactNumber = rs.getInt(4);
                         String NIC = rs.getString(5);
                         String salary = rs.getString(6);
                         String position = rs.getString(7);
                         String password = rs.getString(8);
                         String email = rs.getString(9);
 
-
                         empName2.setText(name);
-                        empGen2.setText(address);
-                        address2.setText(gender);
-                        connu.setText(contactNumber);
-                        empposition2.setText(NIC);
-                        connu.setText(salary);
-                        basicsalary2.setText(position);
-                        empnic2.setText(password);
+                        address2.setText(address);
+                        empGen2.setText(gender);
+                        String number=String.valueOf(contactNumber);
+                        connu.setText(number);
+                        empnic2.setText(NIC);
+                        basicsalary2.setText(salary);
+                        empposition2.setText(position);
+                        empPassword1.setText(password);
                         empemaiL.setText(email);
+
+
+
 
 
 
@@ -332,7 +336,8 @@ public class hrInterface {
                     pst.setString(1, emname);
                     pst.setString(2 ,ADDress);
                     pst.setString(3,gender );
-                    pst.setString(4, contactnumber);
+                    int Number= Integer.parseInt(contactnumber);
+                    pst.setInt(4, Number);
                     pst.setString(5,nIc );
                     pst.setString(6,salary );
                     pst.setString(7,positioN );
