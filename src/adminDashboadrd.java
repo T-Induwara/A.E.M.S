@@ -72,13 +72,21 @@ public class adminDashboadrd {
     private JComboBox MF2;
     private JComboBox HS2;
 
+    private Connection con;
+    private PreparedStatement pst;
+
     public JPanel getMainPanel() {
         return Main;
     }
 
     public adminDashboadrd() {
 
-        connect();
+        DBCredentials dbCons = new DBCredentials();
+        dbCons.connect();
+
+        con = DBCredentials.getConnection();
+        pst = DBCredentials.getPreparedStatement();
+
         table_load();
 
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
@@ -437,24 +445,8 @@ public class adminDashboadrd {
         imgIcon = new ImageIcon(newimg);  // transform it back
         frame.setIconImage(imgIcon.getImage());
     }
-    Connection con;
-    PreparedStatement pst;
-    public void connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "root","");
-            System.out.println("Database connection successful!");
-        }
-        catch (ClassNotFoundException ex)
-        {
-            ex.printStackTrace();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
 
-    }
+
     void table_load()
     {
         try{
