@@ -77,8 +77,8 @@ public class employeeInterface {
     }
 
     public employeeInterface() {
-        DBCredentials dnCons = new DBCredentials();
-        dnCons.connect();
+        DBCredentials dbCons = new DBCredentials();
+        dbCons.connect();
 
         con = DBCredentials.getConnection();
         pst = DBCredentials.getPreparedStatement();
