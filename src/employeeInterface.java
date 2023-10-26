@@ -14,7 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class employeeInterface {
+public class employeeInterface extends JFrame {
     private JPanel Main;
     private JLabel appLogo;
     private JButton viewEmpBtn;
