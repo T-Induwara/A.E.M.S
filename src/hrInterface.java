@@ -370,20 +370,6 @@ public class hrInterface {
         });
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Dashboard");
-        frame.setContentPane(new hrInterface().Main);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
-        // Set the taskbar icon
-        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
-        Image img = imgIcon.getImage();
-        Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        imgIcon = new ImageIcon(newimg);  // transform it back
-        frame.setIconImage(imgIcon.getImage());
-    }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -405,4 +391,22 @@ public class hrInterface {
         }
 
     }
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("A E M S - Dashboard");
+        frame.setContentPane(new hrInterface().Main);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+        // Set the taskbar icon
+        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
+        Image img = imgIcon.getImage();
+        Image newimg = img.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imgIcon = new ImageIcon(newimg);  // transform it back
+        frame.setIconImage(imgIcon.getImage());
+    }
+
 }
+
+
+
