@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class employeeLogin {
-    JPanel Main;
+    private JPanel Main;
     private JLabel appTitle;
     private JLabel appDesc;
     private JTextField empUsername;
