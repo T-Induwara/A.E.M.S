@@ -90,7 +90,7 @@ public class hrInterface {
                 {
                     try{
 
-                        pst = con.prepareStatement("select * from aems");
+                        pst = con.prepareStatement("select empID,name,address,gender,contactNUmber,NIC,salary,position,email from employee");
                         ResultSet rs = pst.executeQuery();
 
                         empTable.setModel(DbUtils.resultSetToTableModel(rs));
@@ -294,6 +294,7 @@ public class hrInterface {
             public void actionPerformed(ActionEvent e) {
 
                 hrTabs.setSelectedIndex(0);
+                table_load();
             }
         });
         addemployee.addActionListener(new ActionListener() {
