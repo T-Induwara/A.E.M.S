@@ -17,19 +17,6 @@ import java.sql.SQLException;
 
 public class supervisorInterface {
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
-        frame.setContentPane(new supervisorInterface().main);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
-        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
-        Image img = imgIcon.getImage();
-        Image newimg = img.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        imgIcon = new ImageIcon(newimg);  // transform it back
-        frame.setIconImage(imgIcon.getImage());
-    }
 
     private JPanel main;
     private JTabbedPane superTabs;
@@ -63,18 +50,23 @@ public class supervisorInterface {
     private JLabel taskTme1;
     private JLabel taskDate1;
     private JLabel employeeID1;
-    private JComboBox AMPM;
-    private JComboBox AMPM2;
+    private JComboBox AMPMComboBox;
+    private JComboBox AMPM2ComboBox;
 
 
     Connection con;
     PreparedStatement pst;
 
+
     public JPanel getMainPanel() {
+
         return main;
+
     }
 
     public void connect() {
+
+        //database connection added
 
         try {
 
@@ -93,10 +85,14 @@ public class supervisorInterface {
     }
     void table_load()
     {
+        //view appoint task table loading method
+
         try{
+
             pst = con.prepareStatement("SELECT * FROM tasks");
             ResultSet rs =pst.executeQuery();
             table1.setModel(DbUtils.resultSetToTableModel(rs));
+
         }
         catch(SQLException e)
         {
@@ -109,6 +105,8 @@ public class supervisorInterface {
         connect();
         table_load();
 
+        //logo added inti interface
+
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -116,6 +114,7 @@ public class supervisorInterface {
         appLogo.setIcon(logoIcon);
 
         //Font linking for Application title
+
         try {
             Font NicoMoji = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/NicoMoji-Regular.ttf")).deriveFont(30f);
             GraphicsEnvironment font1 = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -160,92 +159,108 @@ public class supervisorInterface {
         txtTaskDesc2.setPreferredSize(new Dimension(150, 30));
         txtTaskTime2.setPreferredSize(new Dimension(150, 30));
 
-        //Add task tab
 
-
-
+        //view task button in main interface
         viewTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                superTabs.setSelectedIndex(0);
 
             }
         });
 
-
-        updateTask.addActionListener(new ActionListener() {
+        //add task button in main interface
+        addTasks.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                String taskTitle,taskDate,taskDesc,taskTime,empID;
-
-                taskTitle=txtTaskTitle2.getText();
-                taskDate= txtTaskDate2.getText();
-                taskDesc=txtTaskDesc2.getText();
-                taskTime=txtTaskTime2.getText();
-                empID=txtSearch2.getText();
-
-                try{
-                    pst = con.prepareStatement("UPDATE tasks set taskTitle =? ,description= ?,date= ?,time= ? where empID= ?");
-                    pst.setString(1,taskTitle);
-                    pst.setString(2,taskDate);
-                    pst.setString(3,taskDesc);
-                    pst.setString(4,taskTime);
-                    pst.setString(5,empID);
-
-                    pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"Record Updated.......");
-
-                    table_load();
-                    txtTaskTitle2.setText("");
-                    txtTaskDate2.setText("");
-                    txtTaskDesc2.setText("");
-                    txtTaskTime2.setText("");
-                    txtSearch2.setText("");
-
-                    txtTaskTitle2.requestFocus();
-                }
-
-                catch (SQLException e1){
-                    e1.printStackTrace();
-                }
-
+                superTabs.setSelectedIndex(1);
 
             }
         });
-        removeTask.addActionListener(new ActionListener() {
+
+        //update task button in main interface
+        update.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String empID;
-
-                empID = txtSearch2.getText();
-
-                try{
-                    pst = con.prepareStatement("DELETE from tasks where empID = ?");
-                    pst.setString(1,empID);
-
-                    pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"Record Deleted.......");
-
-                    table_load();
-
-
-                    txtTaskTitle2.setText("");
-                    txtTaskDesc2.setText("");
-                    txtTaskDate2.setText("");
-                    txtTaskTime2.setText("");
-                    txtTaskTitle2.requestFocus();
-                }
-
-                catch (SQLException e1){
-                    e1.printStackTrace();
-                }
-
+                superTabs.setSelectedIndex(2);
 
             }
         });
+
+        //tasks adding
+        appoint.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String taskTitle, taskDate, taskDesc, taskTime, empID;
+
+                // Variable declaration of input fields
+                taskTitle = txtTitle1.getText();
+                taskDate = txtTaskDate1.getText();
+                taskDesc = txtDescription1.getText();
+                taskTime = txtTaskTime1.getText();
+                empID = txtEmpID1.getText();
+
+
+                if (taskTitle.isEmpty() || taskDate.isEmpty() || taskTime.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Task Title, Task Date, and Task Time are required fields.");
+
+
+                    // Check if the employee with the provided empID exists in the database
+                }else if (isEmployeeExists(empID)) {
+
+                    // Employee exists, proceed to add the task
+                    try {
+                        pst = con.prepareStatement("INSERT INTO tasks(taskTitle, description, date, time, empID) VALUES (?, ?, ?, ?, ?)");
+                        pst.setString(1, taskTitle);
+                        pst.setString(2, taskDesc);
+                        pst.setString(3, taskDate);
+                        pst.setString(4, taskTime);
+                        pst.setString(5, empID);
+
+                        pst.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Record Added.......");
+                        table_load();
+
+                        txtTitle1.setText("");
+                        txtTaskDate1.setText("");
+                        txtDescription1.setText("");
+                        txtTaskTime1.setText("");
+                        txtEmpID1.setText("");
+                        txtTitle1.requestFocus();
+
+                    } catch (SQLException e1) {
+
+                        e1.printStackTrace();
+                    }
+                } else {
+
+                    // Employee with the provided empID does not exist
+
+                    JOptionPane.showMessageDialog(null, "Employee with ID " + empID + " is wrong employee ID. Please re-check the employee ID. ");
+                }
+            }
+
+            // Method to check if an employee with the given empID exists in the database
+            private boolean isEmployeeExists(String empID) {
+                try {
+                    pst = con.prepareStatement("SELECT empID FROM employee WHERE empID = ?");
+                    pst.setString(1, empID);
+                    ResultSet rs = pst.executeQuery();
+                    return rs.next(); // If the ResultSet has any rows, the employee exists
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false; // Handle the error as needed
+                }
+            }
+        });
+
+
+        //Search the tasks
         searchEmployee.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //tasks get out from the database
 
                 try{
 
@@ -291,84 +306,103 @@ public class supervisorInterface {
 
             }
         });
-        viewTask.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                superTabs.setSelectedIndex(0);
 
-            }
-        });
-        addTasks.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                superTabs.setSelectedIndex(1);
-
-            }
-        });
-        update.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                superTabs.setSelectedIndex(2);
-
-            }
-        });
-
-        appoint.addActionListener(new ActionListener() {
-
+        //task updating
+        updateTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 String taskTitle,taskDate,taskDesc,taskTime,empID;
 
-                taskTitle= txtTitle1.getText();
-                taskDate= txtTaskDate1.getText();
-                taskDesc = txtDescription1.getText();
-                taskTime = txtTaskTime1.getText();
-                empID = txtEmpID1.getText();
+                //variable declaration
 
+                taskTitle=txtTaskTitle2.getText();
+                taskDate= txtTaskDate2.getText();
+                taskDesc=txtTaskDesc2.getText();
+                taskTime=txtTaskTime2.getText();
+                empID=txtSearch2.getText();
+
+                //update tasks in the database
                 try{
-                    pst = con.prepareStatement("INSERT INTO tasks(taskTitle,description,date,time,empID)VALUES (?,?,?,?,?)");
+                    pst = con.prepareStatement("UPDATE tasks set taskTitle =? ,description= ?,date= ?,time= ? where empID= ?");
                     pst.setString(1,taskTitle);
-                    pst.setString(2,taskDesc);
-                    pst.setString(3,taskDate);
+                    pst.setString(2,taskDate);
+                    pst.setString(3,taskDesc);
                     pst.setString(4,taskTime);
                     pst.setString(5,empID);
 
-
                     pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"Record Added.......");
+                    JOptionPane.showMessageDialog(null,"Record Updated.......");
 
                     table_load();
+                    txtTaskTitle2.setText("");
+                    txtTaskDate2.setText("");
+                    txtTaskDesc2.setText("");
+                    txtTaskTime2.setText("");
+                    txtSearch2.setText("");
 
-
-                    txtTitle1.setText("");
-                    txtTaskDate1.setText("");
-                    txtDescription1.setText("");
-                    txtTaskTime1.setText("");
-                    txtEmpID1.setText("");
-                    txtTitle1.requestFocus();
+                    txtTaskTitle2.requestFocus();
                 }
 
                 catch (SQLException e1){
                     e1.printStackTrace();
                 }
 
+
             }
         });
 
-
-        AMPM.addActionListener(new ActionListener() {
+        //removing tasks
+        removeTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String value1 =txtTaskTime1.getText()+AMPM.getSelectedItem().toString();
+                String empID;
+
+                empID = txtSearch2.getText();
+
+                //delete tasks in to the database
+                try{
+                    pst = con.prepareStatement("DELETE from tasks where empID = ?");
+                    pst.setString(1,empID);
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null,"Record Deleted.......");
+
+                    table_load();
+
+
+                    txtTaskTitle2.setText("");
+                    txtTaskDesc2.setText("");
+                    txtTaskDate2.setText("");
+                    txtTaskTime2.setText("");
+                    txtTaskTitle2.requestFocus();
+                }
+
+                catch (SQLException e1){
+                    e1.printStackTrace();
+                }
+
+
+            }
+        });
+
+        //ComboBox in addTask tab
+        AMPMComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String value1 =txtTaskTime1.getText()+ AMPMComboBox.getSelectedItem().toString();
 
                 txtTaskTime1.setText(value1);
             }
         });
-        AMPM2.addActionListener(new ActionListener() {
+
+        //ComboBox in Update, Search, Remove tab
+        AMPM2ComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String value2 =txtTaskTime2.getText()+AMPM2.getSelectedItem().toString();
+
+                String value2 =txtTaskTime2.getText()+ AMPM2ComboBox.getSelectedItem().toString();
 
                 txtTaskTime2.setText(value2);
             }
@@ -376,7 +410,19 @@ public class supervisorInterface {
     }
 
 
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("A E M S - Advance Employee Management System");
+        frame.setContentPane(new supervisorInterface().main);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
 
+        ImageIcon imgIcon = new ImageIcon("src/assets/logo/logo.png");
+        Image img = imgIcon.getImage();
+        Image newimg = img.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imgIcon = new ImageIcon(newimg);  // transform it back
+        frame.setIconImage(imgIcon.getImage());
+    }
 
     }
 
