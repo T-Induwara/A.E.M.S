@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class employeeInterface {
-    JPanel Main;
+    private JPanel Main;
     private JLabel appLogo;
     private JButton viewEmpBtn;
     private JButton upEmpBtn;
