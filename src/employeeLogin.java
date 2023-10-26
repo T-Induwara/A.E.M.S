@@ -24,9 +24,8 @@ public class employeeLogin {
     private JButton returnBtn;
     private JLabel appLogo;
     int passEmpID = 2;
-
-    Connection con;
-    PreparedStatement pst;
+    private Connection con;
+    private PreparedStatement pst;
 
     public JPanel getMainPanel() {
         return Main;
