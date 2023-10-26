@@ -27,24 +27,13 @@ public class adminLogin {
         return Main;
     }
 
-    public void connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax","Masseffect34c1#@");
-            System.out.println("Database connection successful!");
-        }
-        catch (ClassNotFoundException ex)
-        {
-            ex.printStackTrace();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-
     public adminLogin() {
-        connect();
+        //DB Connection codes
+        DBCredentials dbCons = new DBCredentials();//Creating DB Class object
+        dbCons.connect();//Calling connection method in DBCredentials class
+
+        con = DBCredentials.getConnection();//Get con object from the DB Credentials class
+        pst = DBCredentials.getPreparedStatement();//Get pst object from the DB Credentials class
 
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it

@@ -36,8 +36,8 @@ public class employeeLogin {
         DBCredentials dbCons = new DBCredentials();//Creating DB Class object
         dbCons.connect();//Calling connection method in DBCredentials class
 
-        con = DBCredentials.getConnection();
-        pst = DBCredentials.getPreparedStatement();
+        con = DBCredentials.getConnection();//Get con object from the DB Credentials class
+        pst = DBCredentials.getPreparedStatement();//Get pst object from the DB Credentials class
 
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
