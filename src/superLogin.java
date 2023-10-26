@@ -18,8 +18,8 @@ public class superLogin {
     private JPasswordField superPass;
     private JButton loginBtn;
     private JButton returnBtn;
-    Connection con;
-    PreparedStatement pst;
+    private Connection con;
+    private PreparedStatement pst;
 
     public JPanel getMainPanel() {
         return Main;
