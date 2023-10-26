@@ -14,8 +14,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class employeeInterface {
-    JPanel Main;
+public class employeeInterface extends JFrame {
+    private JPanel Main;
     private JLabel appLogo;
     private JButton viewEmpBtn;
     private JButton upEmpBtn;
@@ -77,8 +77,8 @@ public class employeeInterface {
     }
 
     public employeeInterface() {
-        DBCredentials dnCons = new DBCredentials();
-        dnCons.connect();
+        DBCredentials dbCons = new DBCredentials();
+        dbCons.connect();
 
         con = DBCredentials.getConnection();
         pst = DBCredentials.getPreparedStatement();
