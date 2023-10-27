@@ -259,6 +259,7 @@ public class employeeInterface extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String empUDName,empUDAddress,empUDGender,empUDMail,empUDNumber;
+                    String numPattern = ".*[a-zA-Z]+.*";//regex number matching code
 
                     empUDName = eNameField.getText();
                     empUDAddress = eAddField.getText();
@@ -267,7 +268,7 @@ public class employeeInterface extends JFrame {
                     empUDGender = eGenField.getText();
 
                     //Check number field only contains numbers
-                    if(empUDNumber.matches(".*[a-zA-Z]+.*")){
+                    if(empUDNumber.matches(numPattern)){//check the entered mobile number match with the regex value
                         JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
                     }
                     else{
