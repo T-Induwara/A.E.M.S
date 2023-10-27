@@ -56,25 +56,21 @@ public class hrInterface {
     private JTabbedPane hrTabs;
     private JTextField emppos1;
     private JPasswordField empPassword1;
-    Connection con;
-    PreparedStatement pst;
-    public void connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax","Masseffect34c1#@");
-            System.out.println("Database connection successful!");
-        }
-        catch (ClassNotFoundException ex)
-        {
-            ex.printStackTrace();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
+    private Connection con;
+    private PreparedStatement pst;
+
+    public JPanel getMainPanel() {
+        return Main;
     }
+
     public hrInterface() {
-        connect();
+        //DB Connection codes
+        DBCredentials dbCons = new DBCredentials();//Creating DB Class object
+        dbCons.connect();//Calling connection method in DBCredentials class
+
+        con = DBCredentials.getConnection();//Get con object from the DB Credentials class
+        pst = DBCredentials.getPreparedStatement();//Get pst object from the DB Credentials class
+
         table_load();
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
