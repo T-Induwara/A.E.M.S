@@ -37,19 +37,9 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="c3e0d" class="javax.swing.JButton" binding="viewEmployee">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <background color="-1"/>
-              <foreground color="-15192049"/>
-              <text value="View Employee"/>
-            </properties>
-          </component>
           <component id="90902" class="javax.swing.JButton" binding="addemployee">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Add Employee"/>
@@ -61,6 +51,16 @@
             </constraints>
             <properties>
               <text value="update/remove"/>
+            </properties>
+          </component>
+          <component id="c3e0d" class="javax.swing.JButton" binding="viewEmployee">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+              <foreground color="-15192049"/>
+              <text value="View Employee"/>
             </properties>
           </component>
         </children>
