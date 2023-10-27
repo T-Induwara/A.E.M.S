@@ -68,26 +68,6 @@ public class hrLogin {
         hrUsername.setPreferredSize(new Dimension(400, 40));
         hrPass.setPreferredSize(new Dimension(400, 40));
 
-        hrUsername.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (hrUsername.getText().isEmpty()) {
-                    hrUsername.setText("Enter your email");
-                }
-                else{
-                    //Nothing happening when non focus
-                    hrUsername.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (hrUsername.getText().isEmpty()) {
-                    hrUsername.setText("Enter your email");
-                }
-            }
-        });
-
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
