@@ -260,6 +260,7 @@ public class employeeInterface extends JFrame {
                 try {
                     String empUDName,empUDAddress,empUDGender,empUDMail,empUDNumber;
                     String numPattern = ".*[a-zA-Z]+.*";//regex number matching code
+                    String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
                     empUDName = eNameField.getText();
                     empUDAddress = eAddField.getText();
@@ -270,6 +271,9 @@ public class employeeInterface extends JFrame {
                     //Check number field only contains numbers
                     if(empUDNumber.matches(numPattern)){//check the entered mobile number match with the regex value
                         JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
+                    }
+                    else if(!empUDMail.matches(emailPattern)){
+                        JOptionPane.showMessageDialog(null,"Please check the entered email address!");
                     }
                     else{
                         //Check number field character length is 10
