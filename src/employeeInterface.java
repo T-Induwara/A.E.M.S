@@ -272,6 +272,7 @@ public class employeeInterface extends JFrame {
                     if(empUDNumber.matches(numPattern)){//check the entered mobile number match with the regex value
                         JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
                     }
+                    //Check email field if it not matching with the regex value
                     else if(!empUDMail.matches(emailPattern)){
                         JOptionPane.showMessageDialog(null,"Please check the entered email address!");
                     }
