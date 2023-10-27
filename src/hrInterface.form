@@ -29,38 +29,43 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="2ce6d" class="javax.swing.JLabel" binding="appTitle">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
           <component id="90902" class="javax.swing.JButton" binding="addemployee">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1"/>
+              <foreground color="-14134662"/>
               <text value="Add Employee"/>
             </properties>
           </component>
           <component id="b6f72" class="javax.swing.JButton" binding="updateRemoveButton" default-binding="true">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-1"/>
+              <foreground color="-14134662"/>
               <text value="update/remove"/>
             </properties>
           </component>
           <component id="c3e0d" class="javax.swing.JButton" binding="viewEmployee">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <background color="-1"/>
               <foreground color="-15192049"/>
               <text value="View Employee"/>
+            </properties>
+          </component>
+          <component id="5c29e" class="javax.swing.JLabel" binding="appTitle">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1"/>
+              <text value="A E M S"/>
             </properties>
           </component>
         </children>
@@ -556,7 +561,7 @@
                           </component>
                           <component id="d8d3a" class="javax.swing.JButton" binding="empupdate">
                             <constraints>
-                              <grid row="13" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="13" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <background color="-14134662"/>
@@ -566,7 +571,7 @@
                           </component>
                           <component id="e0287" class="javax.swing.JButton" binding="empremove">
                             <constraints>
-                              <grid row="13" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="13" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <background color="-8115927"/>
@@ -579,6 +584,8 @@
                               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
+                              <background color="-14134662"/>
+                              <foreground color="-1"/>
                               <text value="Search"/>
                             </properties>
                           </component>
