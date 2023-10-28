@@ -52,6 +52,9 @@ public class supervisorInterface {
     private JLabel employeeID1;
     private JComboBox AMPMComboBox;
     private JComboBox AMPM2ComboBox;
+    private JLabel tab1Title;
+    private JLabel tab2Title;
+    private JLabel tab3Title;
 
 
     private Connection con;
@@ -87,7 +90,11 @@ public class supervisorInterface {
         DBCredentials dbCons = new DBCredentials();
         dbCons.connect();
 
+        // creating an object name as con using connection class
         con = DBCredentials.getConnection();
+
+        // creating an object name as pst using connection class
+
         pst = DBCredentials.getPreparedStatement();
 
         table_load();
@@ -112,6 +119,31 @@ public class supervisorInterface {
 
             e.printStackTrace();
         }
+
+        //Font linking for Application Tab Titles
+        try {
+            Font Roboto = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Regular.ttf")).deriveFont(25f);
+            GraphicsEnvironment font2 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font2.registerFont(Roboto);
+            tab1Title.setFont(Roboto);
+            tab2Title.setFont(Roboto);
+            tab3Title.setFont(Roboto);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        //Font linking for Application btns
+        try {
+            Font RobotoBlack = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Black.ttf")).deriveFont(20f);
+            GraphicsEnvironment font3 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font3.registerFont(RobotoBlack);
+            viewTask.setFont(RobotoBlack);
+            addTasks.setFont(RobotoBlack);
+            update.setFont(RobotoBlack);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
 
         //Main interface buttons
         viewTask.setPreferredSize(new Dimension(250, 40));
