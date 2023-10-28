@@ -105,46 +105,52 @@ public class employeeLogin {
                 String userEmail,userPass;
 
                 try {
+                    String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     userEmail = empUsername.getText();
                     //Convert String array into String variable
                     char[] userPassword = empPass.getPassword();
                     userPass = new String(userPassword);
 
-                    pst = con.prepareStatement("SELECT empID,email,password FROM employee WHERE position = 'Employee' AND email = ?");
-                    pst.setString(1, userEmail);
-                    ResultSet rs = pst.executeQuery();
-
-                    if(rs.next()==true){
-                        String empID = rs.getString(1);
-                        passEmpID = Integer.parseInt(empID);
-                        //check code
-                        System.out.println("My ID in login page is "+passEmpID);
-                        String empEmail = rs.getString(2);
-                        String empPass = rs.getString(3);
-                        System.out.println("Pass is "+empPass);
-                        System.out.println("Entered Pass is "+userPass);
-
-                        if(userPass.equals(empPass)){//Compare user given password and the password in the db
-                            //To hide current JPanel
-                            Main.setVisible(false);
-
-                            employeeInterface employeeInterface = new employeeInterface();
-                            //Assign JPanel of adminInterface.java to the adminMainPanel object
-                            JPanel empPanel = employeeInterface.getMainPanel();
-                            //Passing empID from login page to employee dashboard
-
-                            mainInterface.frame.setContentPane(empPanel);
-                            mainInterface.frame.validate();
-                            mainInterface.frame.repaint();
-                            //Pass the employee ID to employee interface from the login interface
-                            employeeInterface.setEmpID(passEmpID);
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(null,"Password is incorrect!");
-                        }
+                    if(!userEmail.matches(emailPattern)){
+                        JOptionPane.showMessageDialog(null,"Invalid email address!");
                     }
                     else{
-                        JOptionPane.showMessageDialog(null,"Please check your email again!");
+                        pst = con.prepareStatement("SELECT empID,email,password FROM employee WHERE position = 'Employee' AND email = ?");
+                        pst.setString(1, userEmail);
+                        ResultSet rs = pst.executeQuery();
+
+                        if(rs.next()==true){
+                            String empID = rs.getString(1);
+                            passEmpID = Integer.parseInt(empID);
+                            //check code
+                            System.out.println("My ID in login page is "+passEmpID);
+                            String empEmail = rs.getString(2);
+                            String empPass = rs.getString(3);
+                            System.out.println("Pass is "+empPass);
+                            System.out.println("Entered Pass is "+userPass);
+
+                            if(userPass.equals(empPass)){//Compare user given password and the password in the db
+                                //To hide current JPanel
+                                Main.setVisible(false);
+
+                                employeeInterface employeeInterface = new employeeInterface();
+                                //Assign JPanel of adminInterface.java to the adminMainPanel object
+                                JPanel empPanel = employeeInterface.getMainPanel();
+                                //Passing empID from login page to employee dashboard
+
+                                mainInterface.frame.setContentPane(empPanel);
+                                mainInterface.frame.validate();
+                                mainInterface.frame.repaint();
+                                //Pass the employee ID to employee interface from the login interface
+                                employeeInterface.setEmpID(passEmpID);
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null,"Password is incorrect!");
+                            }
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null,"Please check your email again!");
+                        }
                     }
                 }
                 catch (SQLException ex) {

@@ -4,12 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 
 public class hrInterface {
     private JPanel Main;
     private JLabel appLogo;
-    private JLabel appTitle;
     private JButton viewEmployee;
     private JTable empTable;
     private JButton updateRemoveButton;
@@ -56,38 +57,62 @@ public class hrInterface {
     private JTabbedPane hrTabs;
     private JTextField emppos1;
     private JPasswordField empPassword1;
-    Connection con;
-    PreparedStatement pst;
-    public void connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/aems", "timax","Masseffect34c1#@");
-            System.out.println("Database connection successful!");
-        }
-        catch (ClassNotFoundException ex)
-        {
-            ex.printStackTrace();
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
+    private JLabel appTitle;
+    private Connection con;
+    private PreparedStatement pst;
+
+    public JPanel getMainPanel() {
+        return Main;
     }
+
     public hrInterface() {
-        connect();
+        //DB Connection codes
+        DBCredentials dbCons = new DBCredentials();//Creating DB Class object
+        dbCons.connect();//Calling connection method in DBCredentials class
+
+        con = DBCredentials.getConnection();//Get con object from the DB Credentials class
+        pst = DBCredentials.getPreparedStatement();//Get pst object from the DB Credentials class
+
         table_load();
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         logoIcon = new ImageIcon(newimg);  // transform it back
         appLogo.setIcon(logoIcon);
+
+        //Font linking for Application title
+        try {
+            Font NicoMoji = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/NicoMoji-Regular.ttf")).deriveFont(40f);
+            GraphicsEnvironment font1 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font1.registerFont(NicoMoji);
+            appTitle.setFont(NicoMoji);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        //Font linking for Application btns
+        try {
+            Font RobotoBlack = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Black.ttf")).deriveFont(20f);
+            GraphicsEnvironment font3 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font3.registerFont(RobotoBlack);
+            viewEmployee.setFont(RobotoBlack);
+            updateRemoveButton.setFont(RobotoBlack);
+            addemployee.setFont(RobotoBlack);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        viewEmployee.setPreferredSize(new Dimension(250, 40));
+        updateRemoveButton.setPreferredSize(new Dimension(250, 40));
+        addemployee.setPreferredSize(new Dimension(250, 40));
+
+        addEmployee1.setPreferredSize(new Dimension(200, 40));
+        empupdate.setPreferredSize(new Dimension(200, 40));
+        empremove.setPreferredSize(new Dimension(200, 40));
+
         viewEmployee.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
-
-
                 {
                     try{
 
@@ -100,16 +125,6 @@ public class hrInterface {
                     {
                         a.printStackTrace();
                     }
-
-
-
-
-
-
-
-
-
-
                 }
 
             }
@@ -212,13 +227,7 @@ public class hrInterface {
             }
             catch (SQLException e1)
             {
-
-
-
                 e1.printStackTrace();
-
-
-
             }
 
 
@@ -227,8 +236,6 @@ public class hrInterface {
         emopsearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 try{
 
 
@@ -261,16 +268,9 @@ public class hrInterface {
                         empposition2.setText(position);
                         empPassword1.setText(password);
                         empemaiL.setText(email);
-
-
-
-
-
-
                     }
                     else
                     {
-
                         empName2.setText("");
                         empGen2.setText("");
                         address2.setText("");
@@ -282,9 +282,6 @@ public class hrInterface {
                         empemaiL.setText("");
 
                         JOptionPane.showMessageDialog(null, "Invalid Employee Number");
-
-
-
                     }
 
 
@@ -367,11 +364,6 @@ public class hrInterface {
                 {
                     e1.printStackTrace();
                 }
-
-
-
-
-
             }
         });
     }
@@ -398,7 +390,7 @@ public class hrInterface {
 
     }
     public static void main(String[] args) {
-        JFrame frame = new JFrame("A E M S - Dashboard");
+        JFrame frame = new JFrame("A E M S - H R Dashboard");
         frame.setContentPane(new hrInterface().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
