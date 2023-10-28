@@ -73,7 +73,7 @@ public class hrInterface {
         con = DBCredentials.getConnection();//Get con object from the DB Credentials class
         pst = DBCredentials.getPreparedStatement();//Get pst object from the DB Credentials class
 
-        table_load();
+        table_load();  //load employee table
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
@@ -110,7 +110,7 @@ public class hrInterface {
         empupdate.setPreferredSize(new Dimension(200, 40));
         empremove.setPreferredSize(new Dimension(200, 40));
 
-        viewEmployee.addActionListener(new ActionListener() {
+        viewEmployee.addActionListener(new ActionListener() { //view employee
             @Override
             public void actionPerformed(ActionEvent e) {
                 {
@@ -130,7 +130,7 @@ public class hrInterface {
             }
         });
 
-        updateRemoveButton.addActionListener(new ActionListener() {
+        updateRemoveButton.addActionListener(new ActionListener() { //update remove button
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -138,7 +138,7 @@ public class hrInterface {
 
             }
         });
-        addEmployee1.addActionListener(new ActionListener() {
+        addEmployee1.addActionListener(new ActionListener() { //add employee part
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -157,7 +157,7 @@ public class hrInterface {
                 Empemail=empemail.getText();
 
 
-                try{
+                try{ // sql exception
                     pst = con.prepareStatement("INSERT INTO employee(name,address,gender,contactNumber,NIC,salary,position,password,email)VALUES (?,?,?,?,?,?,?,?,?)");
                     pst.setString(1,empname1);
                     pst.setString(2,EmpAdress);
@@ -171,7 +171,7 @@ public class hrInterface {
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null,"Record Adedd.......");
 
-                    table_load();
+                    table_load(); //after update view employee table
 
                     empName1.setText("");
                     empAddress.setText("");
@@ -187,7 +187,7 @@ public class hrInterface {
                 }
 
                 catch (SQLException e1){
-                    e1.printStackTrace();
+                    e1.printStackTrace(); //view error
                 }
 
 
@@ -197,14 +197,14 @@ public class hrInterface {
 
 
 
-        empremove.addActionListener(new ActionListener() {
+        empremove.addActionListener(new ActionListener() { //employye remove part
             @Override
             public void actionPerformed(ActionEvent e) {
 
 
             String empiD;
             empiD=empSearch.getText();
-            try {
+            try { // handle sql excepton
 
                 pst = con.prepareStatement("delete from employee where empiD = ?");
                 pst.setString(1,empiD);
@@ -233,7 +233,7 @@ public class hrInterface {
 
             }
         });
-        emopsearch.addActionListener(new ActionListener() {
+        emopsearch.addActionListener(new ActionListener() { //search employee part
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
@@ -246,7 +246,7 @@ public class hrInterface {
 
                     ResultSet rs=pst.executeQuery();
 
-                    if(rs.next()==true)
+                    if(rs.next()==true) // check there are in return in value
                     {
                         String name = rs.getString(1);
                         String address = rs.getString(2);
@@ -290,7 +290,7 @@ public class hrInterface {
                 }
             }
         });
-        viewEmployee.addActionListener(new ActionListener() {
+        viewEmployee.addActionListener(new ActionListener() { //view employee tab
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -298,19 +298,19 @@ public class hrInterface {
                 table_load();
             }
         });
-        addemployee.addActionListener(new ActionListener() {
+        addemployee.addActionListener(new ActionListener() { //add employee tab
             @Override
             public void actionPerformed(ActionEvent e) {
                 hrTabs.setSelectedIndex(1);
             }
         });
-        updateRemoveButton.addActionListener(new ActionListener() {
+        updateRemoveButton.addActionListener(new ActionListener() { //update employee tab
             @Override
             public void actionPerformed(ActionEvent e) {
                 hrTabs.setSelectedIndex(2);
             }
         });
-        empupdate.addActionListener(new ActionListener() {
+        empupdate.addActionListener(new ActionListener() { //employee update part
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -326,7 +326,7 @@ public class hrInterface {
                 password=empPassword1.getText();
                 email=empemaiL.getText();
                 empid=empSearch.getText();
-                try{
+                try{ // sql exception
 
                     pst = con.prepareStatement("update employee set name=?,address=?,gender=?,contactNumber=?,NIC=?,salary=?,position=?,password=?,email=? Where empID=?");
 
@@ -347,7 +347,7 @@ public class hrInterface {
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Record Updateee!!!!!");
 
-                    table_load();
+                    table_load(); // after update view employee table
 
                     empName2.setText("");
                     address2.setText("");
@@ -373,7 +373,7 @@ public class hrInterface {
         // TODO: place custom component creation code here
 
     }
-    void table_load()
+    void table_load() //view employee table
     {
 
 
@@ -389,7 +389,7 @@ public class hrInterface {
         }
 
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) { // main function
         JFrame frame = new JFrame("A E M S - H R Dashboard");
         frame.setContentPane(new hrInterface().Main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
