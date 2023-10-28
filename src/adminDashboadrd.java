@@ -61,7 +61,7 @@ public class adminDashboadrd {
     private JLabel basicUR;
     private JLabel positionUR;
     private JLabel eMailUR;
-    private JLabel title;
+    private JLabel tab3Title;
     private JTextField txtSearchID;
     private JPasswordField txtPassword2;
     private JLabel password2;
@@ -71,6 +71,9 @@ public class adminDashboadrd {
     private JLabel gender;
     private JComboBox MF2;
     private JComboBox HS2;
+    private JLabel tab1Title;
+    private JLabel tab2Title;
+
 
     private Connection con;
     private PreparedStatement pst;
@@ -84,10 +87,15 @@ public class adminDashboadrd {
         DBCredentials dbCons = new DBCredentials();
         dbCons.connect();
 
+        //creating an object name as pst using connection class
         con = DBCredentials.getConnection();
+
+        //creating an object name as con using connection class
         pst = DBCredentials.getPreparedStatement();
 
         table_load();
+
+        //logo added for the interface
 
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
@@ -105,6 +113,31 @@ public class adminDashboadrd {
             e.printStackTrace();
         }
 
+        //Font linking for Application Tab Titles
+        try {
+            Font Roboto = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Regular.ttf")).deriveFont(25f);
+            GraphicsEnvironment font2 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font2.registerFont(Roboto);
+            tab1Title.setFont(Roboto);
+            tab2Title.setFont(Roboto);
+            tab3Title.setFont(Roboto);
+
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        //Font linking for Application btns
+        try {
+            Font RobotoBlack = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Black.ttf")).deriveFont(20f);
+            GraphicsEnvironment font3 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            font3.registerFont(RobotoBlack);
+            view.setFont(RobotoBlack);
+            add.setFont(RobotoBlack);
+            update.setFont(RobotoBlack);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+        //main interface buttons
 
         view.setPreferredSize(new Dimension(250, 40));
         add.setPreferredSize(new Dimension(250, 40));
@@ -147,13 +180,15 @@ public class adminDashboadrd {
         password2.setPreferredSize(new Dimension(150, 40));
 
 
-
+        //add button for main interface
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 adminTabs.setSelectedIndex(1);
             }
         });
+
+        // view button for main interface
         view.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,12 +196,16 @@ public class adminDashboadrd {
                 table_load();
             }
         });
+
+        //update button for main interface
         update.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 adminTabs.setSelectedIndex(2);
             }
         });
+
+        //Add details of HR and supervisor in Add tab
         addAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -228,6 +267,8 @@ public class adminDashboadrd {
 
             }
         });
+
+        //search employee details in update or remove tab
         searchEmployeeID.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -293,6 +334,8 @@ public class adminDashboadrd {
 
             }
         });
+
+        //update employee details in update or remove tab
         updateUR.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -356,7 +399,7 @@ public class adminDashboadrd {
             }
         });
 
-
+        //remove employee details in update or remove tab
         RemoveUR.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -393,6 +436,8 @@ public class adminDashboadrd {
 
             }
         });
+
+        //gender selection
         MF.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -402,6 +447,8 @@ public class adminDashboadrd {
 
             }
         });
+
+        //HR or supervisor selection
         HS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -411,6 +458,7 @@ public class adminDashboadrd {
 
             }
         });
+
         MF2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -431,6 +479,7 @@ public class adminDashboadrd {
         });
     }
 
+    //main function
     public static void main(String[] args) {
         JFrame frame = new JFrame("adminDashboadrd");
         frame.setContentPane(new adminDashboadrd().Main);
@@ -446,6 +495,7 @@ public class adminDashboadrd {
         frame.setIconImage(imgIcon.getImage());
     }
 
+    //table load in view tab
 
     void table_load()
     {
