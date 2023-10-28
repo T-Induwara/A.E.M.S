@@ -141,10 +141,10 @@ public class hrInterface {
         addEmployee1.addActionListener(new ActionListener() { //add employee part
             @Override
             public void actionPerformed(ActionEvent e) {
+                String numPattern = ".*[a-zA-Z]+.*";//regex number matching code
+                String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
                 String empname1, empgen1, Emppos1, Emppassword, EmpAdress, EmpCon, EmpSal, Empemail,empnic;
-
-
 
                 empname1=empName1.getText();
                 EmpAdress=empAddress.getText();
@@ -156,39 +156,52 @@ public class hrInterface {
                 Emppassword=empPassword.getText();
                 Empemail=empemail.getText();
 
+                //int empContactNum = Integer.parseInt(EmpCon);
 
-                try{ // sql exception
-                    pst = con.prepareStatement("INSERT INTO employee(name,address,gender,contactNumber,NIC,salary,position,password,email)VALUES (?,?,?,?,?,?,?,?,?)");
-                    pst.setString(1,empname1);
-                    pst.setString(2,EmpAdress);
-                    pst.setString(3,empgen1);
-                    pst.setString(4,EmpCon );
-                    pst.setString(5,empnic);
-                    pst.setString(6,EmpSal);
-                    pst.setString(7,Emppos1);
-                    pst.setString(8,Emppassword);
-                    pst.setString(9,Empemail);
-                    pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"Record Adedd.......");
+                if(EmpCon.length() != 10){
+                    JOptionPane.showMessageDialog(null, "Check phone number");
+                }
+                else if(EmpCon.matches(numPattern)){
+                    JOptionPane.showMessageDialog(null, "Phone number can only contain numbers!");
+                }
+                else if(!Empemail.matches(emailPattern)){
+                    JOptionPane.showMessageDialog(null, "Email is not valid!");
+                }
+                else{
+                    try{ // sql exception
+                        pst = con.prepareStatement("INSERT INTO employee(name,address,gender,contactNumber,NIC,salary,position,password,email)VALUES (?,?,?,?,?,?,?,?,?)");
+                        pst.setString(1,empname1);
+                        pst.setString(2,EmpAdress);
+                        pst.setString(3,empgen1);
+                        pst.setString(4,EmpCon );
+                        pst.setString(5,empnic);
+                        pst.setString(6,EmpSal);
+                        pst.setString(7,Emppos1);
+                        pst.setString(8,Emppassword);
+                        pst.setString(9,Empemail);
+                        pst.executeUpdate();
+                        JOptionPane.showMessageDialog(null,"Record Adedd.......");
 
-                    table_load(); //after update view employee table
+                        table_load(); //after update view employee table
 
-                    empName1.setText("");
-                    empAddress.setText("");
-                    empGen1.setText("");
-                    empCon.setText("");
-                    empNic2.setText("");
-                    empSal.setText("");
-                    emppos1.setText("");
-                    empPassword.setText("");
-                    empemail.setText("");
+                        empName1.setText("");
+                        empAddress.setText("");
+                        empGen1.setText("");
+                        empCon.setText("");
+                        empNic2.setText("");
+                        empSal.setText("");
+                        emppos1.setText("");
+                        empPassword.setText("");
+                        empemail.setText("");
 
-                    empName1.requestFocus();
+                        empName1.requestFocus();
+                    }
+
+                    catch (SQLException e1){
+                        e1.printStackTrace(); //view error
+                    }
                 }
 
-                catch (SQLException e1){
-                    e1.printStackTrace(); //view error
-                }
 
 
             }
@@ -375,10 +388,8 @@ public class hrInterface {
     }
     void table_load() //view employee table
     {
-
-
         try{
-            pst = con.prepareStatement("SELECT empID,name,address,gender,contactNumber,NIC,salary,position,email FROM employee");
+            pst = con.prepareStatement("SELECT empID,name,address,gender,contactNumber,NIC,salary,position,email FROM employee WHERE position='Employee'");
             ResultSet rs =pst.executeQuery();
             empTable.setModel(DbUtils.resultSetToTableModel(rs));
         }
