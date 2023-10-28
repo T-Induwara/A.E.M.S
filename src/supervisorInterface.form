@@ -705,7 +705,7 @@
                         <properties>
                           <background color="-14134662"/>
                           <foreground color="-1"/>
-                          <text value="Search Employee"/>
+                          <text value="Search Task"/>
                           <verticalAlignment value="0"/>
                         </properties>
                       </component>
