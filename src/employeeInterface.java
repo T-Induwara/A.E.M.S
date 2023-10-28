@@ -282,13 +282,16 @@ public class employeeInterface extends JFrame {
                     empUDNumber = eNumField.getText();
                     empUDGender = eGenField.getText();
 
+                    if(empUDName.isEmpty() || empUDAddress.isEmpty() || empUDMail.isEmpty() || empUDNumber.isEmpty() || empUDGender.isEmpty()){
+                        JOptionPane.showMessageDialog(null,"All field must have values!");
+                    }
                     //Check number field only contains numbers
-                    if(empUDNumber.matches(numPattern)){//check the entered mobile number match with the regex value
+                    else if(empUDNumber.matches(numPattern)){//check the entered mobile number match with the regex value
                         JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
                     }
                     //Check email field if it not matching with the regex value
                     else if(!empUDMail.matches(emailPattern)){
-                        JOptionPane.showMessageDialog(null,"Please check the entered email address!");
+                        JOptionPane.showMessageDialog(null,"Please check the entered new email address!");
                     }
                     else{
                         //Check number field character length is 10
