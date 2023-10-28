@@ -67,6 +67,19 @@ public class supervisorInterface {
 
     }
 
+    // Method to check if an employee with the given empID exists in the database
+    public boolean isEmployeeExists(String empID) {
+        try {
+            pst = con.prepareStatement("SELECT empID FROM employee WHERE empID = ?");
+            pst.setString(1, empID);
+            ResultSet rs = pst.executeQuery();
+            return rs.next(); // If the ResultSet has any rows, the employee exists
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Handle the error as needed
+        }
+    }
+
 
     void table_load()
     {
