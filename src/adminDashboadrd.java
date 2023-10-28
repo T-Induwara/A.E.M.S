@@ -298,7 +298,7 @@ public class adminDashboadrd {
 
                     String empid = txtSearchID.getText();
 
-                    pst = con.prepareStatement("SELECT name,address,gender,contactNumber,NIC,salary,position,password,email from employee where empID=?");
+                    pst = con.prepareStatement("SELECT name,address,gender,contactNumber,NIC,salary,position,password,email from employee where empID=? AND position='Supervisor'");
                     pst.setString(1,empid);
                     ResultSet rs =pst.executeQuery();
 
