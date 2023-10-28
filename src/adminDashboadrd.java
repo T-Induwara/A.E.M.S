@@ -82,12 +82,15 @@ public class adminDashboadrd {
     }
 
     //email validation
+    /*
     public boolean isValidEmail(String email) {
 
-        String emailVaidation = "^[A-Za-z0-9+_.-]+@(.+)$";
-        return email.matches(emailVaidation);
+        String emailValidation = "^[A-Za-z0-9+_.-]+@(.+)$";
+        return email.matches(emailValidation);
 
     }
+
+     */
     public adminDashboadrd() {
 
         DBCredentials dbCons = new DBCredentials();
@@ -217,6 +220,7 @@ public class adminDashboadrd {
             public void actionPerformed(ActionEvent e) {
                 //Add HR or Supervisor
                 try {
+                    String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                     String name,gender,nic,position,password,address,email,contNo,salary,empID;
 
                     name = txtName.getText();
@@ -234,7 +238,7 @@ public class adminDashboadrd {
 
                         JOptionPane.showMessageDialog(null, "Yoy cannot enter values. re-check the text fields...");
 
-                    } else if (!isValidEmail(email)) {
+                    } else if (!email.matches(emailPattern)) {
 
                         JOptionPane.showMessageDialog(null, "Please enter a valid email address.");
 
@@ -294,7 +298,7 @@ public class adminDashboadrd {
 
                     String empid = txtSearchID.getText();
 
-                    pst = con.prepareStatement("SELECT name,address,gender,contactNumber,NIC,salary,position,password,email from employee where empID=?");
+                    pst = con.prepareStatement("SELECT name,address,gender,contactNumber,NIC,salary,position,password,email from employee where empID=? AND position='Supervisor'");
                     pst.setString(1,empid);
                     ResultSet rs =pst.executeQuery();
 
@@ -358,29 +362,31 @@ public class adminDashboadrd {
 
 
             try{
+                String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
                 String name,gender,nic,position,password,address,email,contNo,salary,empID;
 
-                name = txtName.getText();
-                address = txtAddress.getText();
-                gender = txtGender.getText();
-                contNo = txtContact.getText();
-                nic = txtNIC.getText();
-                salary = txtBasic.getText();
-                position = txtPosition.getText();
-                password = txtPassword.getText();
-                email = txtEmail.getText();
+                name = txtName2.getText();
+                address = txtAddress2.getText();
+                gender = txtGender2.getText();
+                contNo = txtContNo2.getText();
+                nic = txtNIC2.getText();
+                salary = txtBasic2.getText();
+                position = txtPosition2.getText();
+                password = txtPassword2.getText();
+                email = txtEmail2.getText();
                 empID = txtSearchID.getText();
 
-                //validate tha mandatory fields
-                if (name.isEmpty() || address.isEmpty() || gender.isEmpty()||contNo.isEmpty() || nic.isEmpty() || position.isEmpty()|| email.isEmpty() ) {
 
-                    JOptionPane.showMessageDialog(null, "Yoy cannot enter values. re-check the text fields...");
+                //validate tha mandatory fields
+                if (name.isEmpty() || address.isEmpty() || gender.isEmpty() || contNo.isEmpty() || nic.isEmpty() || position.isEmpty() || email.isEmpty() ) {
+
+                    JOptionPane.showMessageDialog(null, "You cannot enter values. re-check the text fields...");
 
                 }
 
                 //validate tha email
-                else if (!isValidEmail(email)) {
+                if (!email.matches(emailPattern)) {
 
                     JOptionPane.showMessageDialog(null, "Please enter a valid email address.");
 
