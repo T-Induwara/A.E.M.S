@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
@@ -26,7 +25,7 @@ public class adminDashboadrd {
     private JTextField txtAddress;
     private JLabel name;
     private JLabel address;
-    private JComboBox MF;
+    private JComboBox mfComboBox1;
     private JTextField txtNIC;
     private JTextField txtContact;
     private JTextField txtBasic;
@@ -67,10 +66,10 @@ public class adminDashboadrd {
     private JLabel password2;
     private JTable table1;
     private JTextField txtGender;
-    private JComboBox HS;
+    private JComboBox hsComboBox1;
     private JLabel gender;
-    private JComboBox MF2;
-    private JComboBox HS2;
+    private JComboBox mfComboBox2;
+    private JComboBox hsComboBox2;
     private JLabel tab1Title;
     private JLabel tab2Title;
 
@@ -82,6 +81,13 @@ public class adminDashboadrd {
         return Main;
     }
 
+    //email validation
+    public boolean isValidEmail(String email) {
+
+        String emailVaidation = "^[A-Za-z0-9+_.-]+@(.+)$";
+        return email.matches(emailVaidation);
+
+    }
     public adminDashboadrd() {
 
         DBCredentials dbCons = new DBCredentials();
@@ -150,7 +156,7 @@ public class adminDashboadrd {
         //Input text areas
         txtName.setPreferredSize(new Dimension(150, 30));
         txtAddress.setPreferredSize(new Dimension(150, 30));
-        MF.setPreferredSize(new Dimension(150, 30));
+        mfComboBox1.setPreferredSize(new Dimension(150, 30));
         txtContact.setPreferredSize(new Dimension(150, 30));
         txtNIC.setPreferredSize(new Dimension(150, 30));
         txtBasic.setPreferredSize(new Dimension(150, 30));
@@ -224,7 +230,16 @@ public class adminDashboadrd {
                     email = txtEmail.getText();
                     empID = txtSearchID.getText();
 
-                    if(contNo.matches(".*[a-zA-Z]+.*")){
+                    if (name.isEmpty() || address.isEmpty() || gender.isEmpty()||contNo.isEmpty() || nic.isEmpty() || position.isEmpty()|| email.isEmpty() ) {
+
+                        JOptionPane.showMessageDialog(null, "Yoy cannot enter values. re-check the text fields...");
+
+                    } else if (!isValidEmail(email)) {
+
+                        JOptionPane.showMessageDialog(null, "Please enter a valid email address.");
+
+
+                    }else if(contNo.matches(".*[a-zA-Z]+.*")){
                         JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
                     }
                     else{
@@ -266,6 +281,7 @@ public class adminDashboadrd {
                 }
 
             }
+
         });
 
         //search employee details in update or remove tab
@@ -341,29 +357,48 @@ public class adminDashboadrd {
             public void actionPerformed(ActionEvent e) {
 
 
-                try {
-                    String name,gender,nic,position,password,address,email,contNo,salary,empID;
+            try{
 
-                    name = txtName2.getText();
-                    address = txtAddress2.getText();
-                    gender = txtGender2.getText();
-                    contNo = txtContNo2.getText();
-                    nic = txtNIC2.getText();
-                    salary = txtBasic2.getText();
-                    position = txtPosition2.getText();
-                    password = txtPassword2.getText();
-                    email = txtEmail2.getText();
-                    empID = txtSearchID.getText();
+                String name,gender,nic,position,password,address,email,contNo,salary,empID;
 
-                    if(contNo.matches(".*[a-zA-Z]+.*")){
-                        JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
+                name = txtName.getText();
+                address = txtAddress.getText();
+                gender = txtGender.getText();
+                contNo = txtContact.getText();
+                nic = txtNIC.getText();
+                salary = txtBasic.getText();
+                position = txtPosition.getText();
+                password = txtPassword.getText();
+                email = txtEmail.getText();
+                empID = txtSearchID.getText();
+
+                //validate tha mandatory fields
+                if (name.isEmpty() || address.isEmpty() || gender.isEmpty()||contNo.isEmpty() || nic.isEmpty() || position.isEmpty()|| email.isEmpty() ) {
+
+                    JOptionPane.showMessageDialog(null, "Yoy cannot enter values. re-check the text fields...");
+
+                }
+
+                //validate tha email
+                else if (!isValidEmail(email)) {
+
+                    JOptionPane.showMessageDialog(null, "Please enter a valid email address.");
+
+
+                }
+
+                //validate the Phone number it includes only for number
+                else if(contNo.matches(".*[a-zA-Z]+.*")){
+                    JOptionPane.showMessageDialog(null,"Please check the entered new mobile number!");
+                }
+
+                //validate the length of phone number
+                else{
+                    if(contNo.length() != 10){
+                        JOptionPane.showMessageDialog(null,"The mobile number must contain 10 numbers!");
                     }
                     else{
-                        if(contNo.length() != 10){
-                            JOptionPane.showMessageDialog(null,"The mobile number must contain 10 numbers!");
-                        }
-                        else{
-                            int no = Integer.parseInt(contNo);
+                        int no = Integer.parseInt(contNo);
 
                             pst = con.prepareStatement("UPDATE employee SET name=?,address=?,gender=?,contactNumber=?,Nic=?,salary=?, position=?, password=?, email=? WHERE empID = ?");
                             pst.setString(1, name);
@@ -437,41 +472,44 @@ public class adminDashboadrd {
             }
         });
 
-        //gender selection
-        MF.addActionListener(new ActionListener() {
+        //gender selection in add tab
+        mfComboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String value1 = MF.getSelectedItem().toString();
+                String value1 = mfComboBox1.getSelectedItem().toString();
 
                 txtGender.setText(value1);
 
             }
         });
 
-        //HR or supervisor selection
-        HS.addActionListener(new ActionListener() {
+        //HR or supervisor selection in add tab
+        hsComboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String value2 = HS.getSelectedItem().toString();
+                String value2 = hsComboBox1.getSelectedItem().toString();
 
                 txtPosition.setText(value2);
 
             }
         });
 
-        MF2.addActionListener(new ActionListener() {
+        //gender selection in update tab
+        mfComboBox2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String value4 = MF.getSelectedItem().toString();
+                String value4 = mfComboBox1.getSelectedItem().toString();
 
                 txtGender2.setText(value4);
 
             }
         });
-        HS2.addActionListener(new ActionListener() {
+
+        //HR or supervisor selection in update tab
+        hsComboBox2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String value3 = HS.getSelectedItem().toString();
+                String value3 = hsComboBox1.getSelectedItem().toString();
 
                 txtPosition2.setText(value3);
 
