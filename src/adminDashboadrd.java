@@ -43,7 +43,6 @@ public class adminDashboadrd {
     private JButton searchEmployeeID;
     private JTextField txtName2;
     private JTextField txtAddress2;
-
     private JTextField txtGender2;
     private JTextField txtContNo2;
     private JTextField txtNIC2;
@@ -72,7 +71,6 @@ public class adminDashboadrd {
     private JComboBox hsComboBox2;
     private JLabel tab1Title;
     private JLabel tab2Title;
-
 
     private Connection con;
     private PreparedStatement pst;
@@ -293,9 +291,7 @@ public class adminDashboadrd {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
                 try{
-
                     String empid = txtSearchID.getText();
 
                     pst = con.prepareStatement("SELECT name,address,gender,contactNumber,NIC,salary,position,password,email from employee where empID=? AND position='Supervisor'");
@@ -544,7 +540,7 @@ public class adminDashboadrd {
     void table_load()
     {
         try{
-            pst = con.prepareStatement("SELECT empID,name,address,gender,contactNumber,NIC,salary,position,email FROM employee");
+            pst = con.prepareStatement("SELECT empID,name,address,gender,contactNumber,NIC,salary,position,email FROM employee WHERE position='HR' OR position='Supervisor'");
             ResultSet rs =pst.executeQuery();
             table1.setModel(DbUtils.resultSetToTableModel(rs));
         }
