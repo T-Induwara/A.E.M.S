@@ -17,12 +17,12 @@ import java.sql.SQLException;
 public class employeeInterface extends JFrame {
     private JPanel Main;
     private JLabel appLogo;
-    private JButton viewEmpBtn;
-    private JButton upEmpBtn;
-    private JButton reqLeaveBtn;
-    private JButton reqWithdrawBtn;
-    private JTabbedPane empTabs;
     private JLabel appTitle;
+    private JButton viewEmpBtn;//Main viewEmpBtn
+    private JButton upEmpBtn;//Main upEmpBtn
+    private JButton reqLeaveBtn;//Main reqLeaveBtn
+    private JButton reqWithdrawBtn;//Main withdrawLeaveBtn
+    private JTabbedPane empTabs;
     private JLabel tab1Title;
     private JLabel tab2Title;
     private JLabel tab3Title;
@@ -56,15 +56,17 @@ public class employeeInterface extends JFrame {
     private Connection con;
     private PreparedStatement pst;
 
+    //Return the employeeInterface JPanel
     public JPanel getMainPanel() {
         return Main;
     }
 
+    //Assigning empID that returns from employeeLogin UI
     public void setEmpID(int empID) {
         newEmpID = empID;
     }
 
-    void leaveTableLoad(){
+    public void leaveTableLoad(){
         try{
             pst = con.prepareStatement("SELECT requestID,title,description,date,time FROM request WHERE empID=?");
             pst.setInt(1, newEmpID);
