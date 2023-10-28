@@ -53,8 +53,8 @@ public class employeeInterface extends JFrame {
     private JLabel frmPosition;
     private JLabel frmGender;
     private int newEmpID;
-    private Connection con;
-    private PreparedStatement pst;
+    private Connection con;//Create an object named con using Connection class
+    private PreparedStatement pst;//Create an object named pst using PreparedStatment class
 
     //Return the employeeInterface JPanel
     public JPanel getMainPanel() {
@@ -67,6 +67,7 @@ public class employeeInterface extends JFrame {
     }
 
     public void leaveTableLoad(){
+        //Exception handling for leave table load
         try{
             pst = con.prepareStatement("SELECT requestID,title,description,date,time FROM request WHERE empID=?");
             pst.setInt(1, newEmpID);
@@ -79,33 +80,39 @@ public class employeeInterface extends JFrame {
     }
 
     public employeeInterface() {
+        //Create a DB Credentials object named dbCons using DBCredentials helper class
         DBCredentials dbCons = new DBCredentials();
+        //Invoking connect method on DBCredentials class
         dbCons.connect();
 
+        //Assign the returning con object from DBCredentials class
         con = DBCredentials.getConnection();
+        //Assign the returning pst object from DBCredentials class
         pst = DBCredentials.getPreparedStatement();
 
+        //Add main logo of the interface
         ImageIcon logoIcon = new ImageIcon("src/assets/logo/logo.png");
         Image image = logoIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         logoIcon = new ImageIcon(newimg);  // transform it back
         appLogo.setIcon(logoIcon);
 
-        //Font linking for Application title
+        //Font linking and exception handling for Application title
         try {
             Font NicoMoji = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/NicoMoji-Regular.ttf")).deriveFont(40f);
             GraphicsEnvironment font1 = GraphicsEnvironment.getLocalGraphicsEnvironment();
             font1.registerFont(NicoMoji);
-            appTitle.setFont(NicoMoji);
+            appTitle.setFont(NicoMoji);//Font assigning for application title
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
 
-        //Font linking for Application Tab Titles
+        //Font linking and exception handling for Application Tab Titles
         try {
             Font Roboto = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Regular.ttf")).deriveFont(25f);
             GraphicsEnvironment font2 = GraphicsEnvironment.getLocalGraphicsEnvironment();
             font2.registerFont(Roboto);
+            //Font assigning for application tab titles
             tab1Title.setFont(Roboto);
             tab2Title.setFont(Roboto);
             tab3Title.setFont(Roboto);
@@ -114,11 +121,12 @@ public class employeeInterface extends JFrame {
             e.printStackTrace();
         }
 
-        //Font linking for Application btns
+        //Font linking and exception handling for Application btns
         try {
             Font RobotoBlack = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Roboto-Black.ttf")).deriveFont(20f);
             GraphicsEnvironment font3 = GraphicsEnvironment.getLocalGraphicsEnvironment();
             font3.registerFont(RobotoBlack);
+            //Font assigning for application main buttons
             viewEmpBtn.setFont(RobotoBlack);
             upEmpBtn.setFont(RobotoBlack);
             reqLeaveBtn.setFont(RobotoBlack);
@@ -126,6 +134,7 @@ public class employeeInterface extends JFrame {
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
+
 
         viewEmpBtn.setPreferredSize(new Dimension(250, 40));
         upEmpBtn.setPreferredSize(new Dimension(250, 40));
@@ -163,18 +172,21 @@ public class employeeInterface extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 empTabs.setSelectedIndex(0);
 
+                //Exception handling for SQL queries
                 try {
-                    System.out.println("My id is "+newEmpID);
+                    //System.out.println("My id is "+newEmpID);
 
+                    //We use prepared stement to prevent SQL Injections
                     pst = con.prepareStatement("SELECT name,address,gender,contactNumber,nic,position,email FROM employee WHERE empID = ?");
                     pst.setInt(1, newEmpID);
                     ResultSet rs = pst.executeQuery();
 
+                    //Check whether the execute command returning a value or not
                     if(rs.next()==true){
                         String eName = rs.getString(1);
                         String eAdd = rs.getString(2);
                         String eGender = rs.getString(3);
-                        int eNum = rs.getInt(4);
+                        int eNum = rs.getInt(4);//Get the int value that returns from the database
                         String eNIC = rs.getString(5);
                         String ePosition = rs.getString(6);
                         String eEmail = rs.getString(7);
