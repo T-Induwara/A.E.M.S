@@ -62,29 +62,6 @@
                   <text value="A E M S"/>
                 </properties>
               </component>
-              <component id="3b3b2" class="javax.swing.JButton" binding="viewTask">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <autoscrolls value="true"/>
-                  <background color="-1"/>
-                  <doubleBuffered value="true"/>
-                  <focusCycleRoot value="true"/>
-                  <focusTraversalPolicyProvider value="true"/>
-                  <font size="14"/>
-                  <foreground color="-14134662"/>
-                  <hideActionText value="true"/>
-                  <inheritsPopupMenu value="true"/>
-                  <opaque value="true"/>
-                  <requestFocusEnabled value="true"/>
-                  <rolloverEnabled value="true"/>
-                  <selected value="true"/>
-                  <text value="View appointed tasks"/>
-                  <verifyInputWhenFocusTarget value="true"/>
-                  <visible value="true"/>
-                </properties>
-              </component>
               <component id="98684" class="javax.swing.JButton" binding="addTasks">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -122,6 +99,29 @@
                   <selected value="true"/>
                   <text value="Update / Remove tasks"/>
                   <verifyInputWhenFocusTarget value="true"/>
+                </properties>
+              </component>
+              <component id="3b3b2" class="javax.swing.JButton" binding="viewTask">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <autoscrolls value="true"/>
+                  <background color="-1"/>
+                  <doubleBuffered value="true"/>
+                  <focusCycleRoot value="true"/>
+                  <focusTraversalPolicyProvider value="true"/>
+                  <font size="14"/>
+                  <foreground color="-14134662"/>
+                  <hideActionText value="true"/>
+                  <inheritsPopupMenu value="true"/>
+                  <opaque value="true"/>
+                  <requestFocusEnabled value="true"/>
+                  <rolloverEnabled value="true"/>
+                  <selected value="true"/>
+                  <text value="View appointed tasks"/>
+                  <verifyInputWhenFocusTarget value="true"/>
+                  <visible value="true"/>
                 </properties>
               </component>
             </children>
@@ -274,7 +274,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="b9fab" class="javax.swing.JLabel">
+                  <component id="b9fab" class="javax.swing.JLabel" binding="tab1Title">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -553,7 +553,7 @@
                 <border type="none"/>
                 <children/>
               </grid>
-              <component id="33d10" class="javax.swing.JLabel">
+              <component id="33d10" class="javax.swing.JLabel" binding="tab2Title">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -868,7 +868,7 @@
                   </grid>
                 </children>
               </grid>
-              <component id="f80f5" class="javax.swing.JLabel">
+              <component id="f80f5" class="javax.swing.JLabel" binding="tab3Title">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
