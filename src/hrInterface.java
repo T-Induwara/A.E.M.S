@@ -116,7 +116,7 @@ public class hrInterface {
                 {
                     try{
 
-                        pst = con.prepareStatement("select empID,name,address,gender,contactNUmber,NIC,salary,position,email from employee");
+                        pst = con.prepareStatement("select empID,name,address,gender,contactNUmber,NIC,salary,position,email from employee where position='Employee'");
                         ResultSet rs = pst.executeQuery();
 
                         empTable.setModel(DbUtils.resultSetToTableModel(rs));

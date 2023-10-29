@@ -163,7 +163,7 @@
           </grid>
         </constraints>
         <properties>
-          <enabled value="true"/>
+          <enabled value="false"/>
           <focusable value="true"/>
           <font name="UD Digi Kyokasho N-B" size="14" style="1"/>
           <requestFocusEnabled value="true"/>

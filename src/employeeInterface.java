@@ -57,11 +57,13 @@ public class employeeInterface extends JFrame {
     private PreparedStatement pst;//Create an object named pst using PreparedStatment class
 
     //Return the employeeInterface JPanel
+    //Getter
     public JPanel getMainPanel() {
         return Main;
     }
 
     //Assigning empID that returns from employeeLogin UI
+    //Setter
     public void setEmpID(int empID) {
         newEmpID = empID;
     }
@@ -244,12 +246,14 @@ public class employeeInterface extends JFrame {
                 }
             }
         });
+
         reqLeaveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 empTabs.setSelectedIndex(2);
             }
         });
+
         reqWithdrawBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
