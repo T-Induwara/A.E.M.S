@@ -67,6 +67,19 @@ public class supervisorInterface {
 
     }
 
+    // Method to check if an employee with the given empID exists in the database
+    public boolean isEmployeeExists(String empID) {
+        try {
+            pst = con.prepareStatement("SELECT empID FROM employee WHERE empID = ?");
+            pst.setString(1, empID);
+            ResultSet rs = pst.executeQuery();
+            return rs.next(); // If the ResultSet has any rows, the employee exists
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Handle the error as needed
+        }
+    }
+
 
     void table_load()
     {
@@ -237,7 +250,7 @@ public class supervisorInterface {
                         pst.setString(5, empID);
 
                         pst.executeUpdate();
-                        JOptionPane.showMessageDialog(null, "Record Added.......");
+                        JOptionPane.showMessageDialog(null, "Task Added.......");
                         table_load();
 
                         txtTitle1.setText("");
@@ -283,9 +296,9 @@ public class supervisorInterface {
 
                 try{
 
-                    String empid = txtSearch2.getText();
-                    pst = con.prepareStatement("SELECT taskTitle,description,date,time from tasks where empID=?");
-                    pst.setString(1,empid);
+                    String taskid = txtSearch2.getText();
+                    pst = con.prepareStatement("SELECT taskTitle,description,date,time from tasks where taskID=?");
+                    pst.setString(1,taskid);
                     ResultSet rs =pst.executeQuery();
 
                     if (rs.next()==true){
@@ -310,7 +323,7 @@ public class supervisorInterface {
                         txtTaskTime2.setText("");
 
 
-                        JOptionPane.showMessageDialog(null,"Invalid Employee Number.");
+                        JOptionPane.showMessageDialog(null,"Invalid Task ID.");
 
                     }
 
@@ -331,7 +344,7 @@ public class supervisorInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String taskTitle,taskDate,taskDesc,taskTime,empID;
+                String taskTitle,taskDate,taskDesc,taskTime,taskID;
 
                 //variable declaration
 
@@ -339,19 +352,19 @@ public class supervisorInterface {
                 taskDate= txtTaskDate2.getText();
                 taskDesc=txtTaskDesc2.getText();
                 taskTime=txtTaskTime2.getText();
-                empID=txtSearch2.getText();
+                taskID=txtSearch2.getText();
 
                 //update tasks in the database
                 try{
-                    pst = con.prepareStatement("UPDATE tasks set taskTitle =? ,description= ?,date= ?,time= ? where empID= ?");
+                    pst = con.prepareStatement("UPDATE tasks set taskTitle =? ,description= ?,date= ?,time= ? where taskID= ?");
                     pst.setString(1,taskTitle);
                     pst.setString(2,taskDesc);
                     pst.setString(3,taskDate);
                     pst.setString(4,taskTime);
-                    pst.setString(5,empID);
+                    pst.setString(5,taskID);
 
                     pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"Record Updated.......");
+                    JOptionPane.showMessageDialog(null,"Task Updated.......");
 
                     table_load();
 
@@ -376,17 +389,17 @@ public class supervisorInterface {
         removeTask.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String empID;
+                String taskID;
 
-                empID = txtSearch2.getText();
+                taskID = txtSearch2.getText();
 
                 //delete tasks in to the database
                 try{
-                    pst = con.prepareStatement("DELETE from tasks where empID = ?");
-                    pst.setString(1,empID);
+                    pst = con.prepareStatement("DELETE from tasks where taskID = ?");
+                    pst.setString(1,taskID);
 
                     pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"Record Deleted.......");
+                    JOptionPane.showMessageDialog(null,"Task Deleted.......");
 
                     table_load();
 

@@ -43,7 +43,6 @@ public class adminDashboadrd {
     private JButton searchEmployeeID;
     private JTextField txtName2;
     private JTextField txtAddress2;
-
     private JTextField txtGender2;
     private JTextField txtContNo2;
     private JTextField txtNIC2;
@@ -72,7 +71,6 @@ public class adminDashboadrd {
     private JComboBox hsComboBox2;
     private JLabel tab1Title;
     private JLabel tab2Title;
-
 
     private Connection con;
     private PreparedStatement pst;
@@ -293,13 +291,13 @@ public class adminDashboadrd {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
                 try{
-
                     String empid = txtSearchID.getText();
+                    int newEmpID = Integer.parseInt(empid);
 
-                    pst = con.prepareStatement("SELECT name,address,gender,contactNumber,NIC,salary,position,password,email from employee where empID=? AND position='Supervisor'");
-                    pst.setString(1,empid);
+                    pst = con.prepareStatement("SELECT name,address,gender,contactNumber,NIC,salary,position,password,email FROM employee WHERE empID=? AND (position='Supervisor' OR position='HR')");
+                    pst.setInt(1,newEmpID);
+                    System.out.println("Entered employee id is "+newEmpID);
                     ResultSet rs =pst.executeQuery();
 
                     if (rs.next()==true){
@@ -406,7 +404,7 @@ public class adminDashboadrd {
                     else{
                         int no = Integer.parseInt(contNo);
 
-                            pst = con.prepareStatement("UPDATE employee SET name=?,address=?,gender=?,contactNumber=?,Nic=?,salary=?, position=?, password=?, email=? WHERE empID = ?");
+                            pst = con.prepareStatement("UPDATE employee SET name=?,address=?,gender=?,contactNumber=?,NIC=?,salary=?, position=?, password=?, email=? WHERE empID = ?");
                             pst.setString(1, name);
                             pst.setString(2, address);
                             pst.setString(3, gender);
@@ -421,15 +419,16 @@ public class adminDashboadrd {
                             pst.executeUpdate();
 
                             JOptionPane.showMessageDialog(null,"Your details have updated!");
-                            txtName2.setText(name);
-                            txtAddress2.setText(address);
-                            txtGender2.setText(gender);
-                            txtContNo2.setText(contNo);
-                            txtNIC2.setText(nic);
-                            txtBasic2.setText(salary);
-                            txtPosition2.setText(position);
-                            txtPassword2.setText(password);
-                            txtEmail2.setText(email);
+
+                            txtName2.setText("");
+                            txtAddress2.setText("");
+                            txtGender2.setText("");
+                            txtContNo2.setText("");
+                            txtNIC2.setText("");
+                            txtBasic2.setText("");
+                            txtPosition2.setText("");
+                            txtPassword2.setText("");
+                            txtEmail2.setText("");
                         }
                     }
 
@@ -544,7 +543,7 @@ public class adminDashboadrd {
     void table_load()
     {
         try{
-            pst = con.prepareStatement("SELECT empID,name,address,gender,contactNumber,NIC,salary,position,email FROM employee");
+            pst = con.prepareStatement("SELECT empID,name,address,gender,contactNumber,NIC,salary,position,email FROM employee WHERE position='HR' OR position='Supervisor'");
             ResultSet rs =pst.executeQuery();
             table1.setModel(DbUtils.resultSetToTableModel(rs));
         }
